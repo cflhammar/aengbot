@@ -1,3 +1,5 @@
+using System;
+
 namespace Sweetspot;
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);

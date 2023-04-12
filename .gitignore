@@ -10,6 +10,12 @@
 *.sln.docstates
 
 .idea
+.DS_Store
+**/.DS_Store
+.idea/.DS_Store
+.idea/
+
+
 
 # Build results
 [Dd]ebug/
