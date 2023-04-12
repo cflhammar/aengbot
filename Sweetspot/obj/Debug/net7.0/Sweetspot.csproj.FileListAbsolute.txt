@@ -1,0 +1,15 @@
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/bin/Debug/net7.0/Sweetspot
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/bin/Debug/net7.0/Sweetspot.deps.json
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/bin/Debug/net7.0/Sweetspot.runtimeconfig.json
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/bin/Debug/net7.0/Sweetspot.dll
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/bin/Debug/net7.0/Sweetspot.pdb
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.csproj.AssemblyReference.cache
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.GeneratedMSBuildEditorConfig.editorconfig
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.AssemblyInfoInputs.cache
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.AssemblyInfo.cs
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.csproj.CoreCompileInputs.cache
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.dll
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/refint/Sweetspot.dll
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.pdb
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/Sweetspot.genruntimeconfig.cache
+/Users/fredrik.hammar/Dev/Sweetspot/Sweetspot/obj/Debug/net7.0/ref/Sweetspot.dll
