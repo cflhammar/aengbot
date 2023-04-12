@@ -1,5 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.Json;
 using Sweetspot;
 
@@ -16,7 +19,7 @@ List<Booking>? bookings = JsonSerializer.Deserialize<List<Booking>>(json);
 bookings?.ForEach(b =>
 {
     if (b.available_slots == 4 && 
-        b.category.name != "Stängd" &&g
+        b.category.name != "Stängd" &&
         b.from.Hour < 17)
     {
         Console.WriteLine(b.from.Date + " > " +  b.@from.Hour + ":" + b.@from.Minute);
