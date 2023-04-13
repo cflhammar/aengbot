@@ -30,7 +30,7 @@ static async Task Main(string[] args)
         var t = b.from.Hour + 2;
         Console.WriteLine(b.from.Day + " .." + t + ":" + b.from.Minute  + " > " + b.available_slots + " > " + b.category.name);
 
-        if (b.available_slots == 4 &&
+        if (b.available_slots == 1 &&
             b.category.name != "Stängd" &&
             t < 17)
         {
