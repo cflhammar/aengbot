@@ -31,10 +31,14 @@ public class EmailService
             //else if (_settings.UseStartTls)
             //{
             await smtp.ConnectAsync("smtp-relay.sendinblue.com", 587, SecureSocketOptions.StartTls);
+            Console.WriteLine("1");
             // }
             await smtp.AuthenticateAsync("cflhammar@gmail.com", "0GHbpB1YXV73EhQv");
+            Console.WriteLine("2");
             await smtp.SendAsync(mail);
+            Console.WriteLine("3");
             await smtp.DisconnectAsync(true);
+            Console.WriteLine("4");
             return true;
         }
         catch (Exception)

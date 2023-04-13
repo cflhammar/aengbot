@@ -27,13 +27,14 @@ static async Task Main(string[] args)
 
     bookings?.ForEach(async b =>
     {
-        Console.WriteLine(b.from + " > " + b.available_slots + " > " + b.category.name);
+        var t = b.from.Hour + 2;
+        Console.WriteLine(b.from.Day + " .." + t + ":" + b.from.Minute  + " > " + b.available_slots + " > " + b.category.name);
 
         if (b.available_slots == 4 &&
             b.category.name != "Stängd" &&
-            b.from.Hour < 17)
+            t < 17)
         {
-            Console.WriteLine(b.from.Date + " > " + b.@from.Hour + ":" + b.@from.Minute);
+            Console.WriteLine(b.from.Day + " > " + t + ":" + b.from.Minute);
             var mailService = new EmailService();
             await mailService.SendAsync("cflhammar@gmail.com");
             found = true;
