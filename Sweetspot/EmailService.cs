@@ -12,6 +12,8 @@ public class EmailService
     {
         try
         {
+            Console.WriteLine("sending email");
+            
             var mail = new MimeMessage();
             mail.From.Add(new MailboxAddress("Test", "cflhammar@gmail.com"));
             mail.Sender = new MailboxAddress("Test", "cflhammar@gmail.com");
