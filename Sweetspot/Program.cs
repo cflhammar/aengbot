@@ -21,6 +21,8 @@ Console.WriteLine("Letar efter starttid " + d + " > "  + f + "-" + t);
 
     bookings?.ForEach(b =>
     {
+        Console.WriteLine(b.from + " > " + b.available_slots  + " > " + b.category.name);
+        
         if (b.available_slots == 4 && 
             b.category.name != "Stängd" &&
             b.from.Hour < 17)
