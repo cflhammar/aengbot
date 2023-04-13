@@ -10,8 +10,7 @@ public class EmailService
 {
     public async Task<bool> SendAsync(string email)
     {
-        try
-        {
+
             Console.WriteLine("sending email");
             
             var mail = new MimeMessage();
@@ -40,10 +39,8 @@ public class EmailService
             await smtp.DisconnectAsync(true);
             Console.WriteLine("4");
             return true;
+    
+       
         }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
+    
 }
