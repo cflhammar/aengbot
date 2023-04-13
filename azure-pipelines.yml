@@ -4,7 +4,13 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+# YAML file in the release branch
+schedules:
+  - cron: "* 7-24 13-15 4 *"
+    displayName: check every minute
+    branches:
+      include:
+        - main
 
 pool:
   vmImage: ubuntu-latest
