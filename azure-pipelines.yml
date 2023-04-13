@@ -6,10 +6,10 @@
 trigger: none
 
 schedules:
-  - cron: "* * 13-15 4 *"
+  - cron: "* 7-23 13-15 4 *"
     branches:
       include:
-        - master
+        - main
     displayName: Daily run at midnight
     always: true
 
