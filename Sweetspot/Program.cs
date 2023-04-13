@@ -36,8 +36,8 @@ static async Task Main(string[] args)
         {
             Console.WriteLine(b.from.Day + " > " + t + ":" + b.from.Minute);
             var mailService = new EmailService();
-            await mailService.SendAsync("cflhammar@gmail.com");
-            found = true;
+            found = await mailService.SendAsync("cflhammar@gmail.com");
+          
         }
     });
     if (!found)
