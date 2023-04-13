@@ -32,7 +32,7 @@ static async Task Main(string[] args)
 
         if (b.available_slots == 1 &&
             b.category.name != "Stängd" &&
-            t < 17)
+            t < 18)
         {
             Console.WriteLine(b.from.Day + " > " + t + ":" + b.from.Minute);
             var mailService = new EmailService();
