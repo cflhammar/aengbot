@@ -9,7 +9,7 @@ static class Program
     
     static async Task Main(string[] args)
     {
-        var d = "2023-04-17";
+        var d = "2023-04-15";
         var f = 8;
         var t = 17;
         Console.WriteLine("Letar efter starttid " + d + " > " + f + "-" + t);
