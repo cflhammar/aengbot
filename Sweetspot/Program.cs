@@ -1,7 +1,4 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
-using System.Text.Json;
-
 namespace Sweetspot;
 
 static class Program
@@ -9,44 +6,26 @@ static class Program
     
     static async Task Main(string[] args)
     {
-        var d = "2023-04-15";
-        var f = 8;
-        var t = 17;
-        Console.WriteLine("Letar efter starttid " + d + " > " + f + "-" + t);
+        Dictionary<string, (string date, (int from, int to) interval)> subscriptions = new();
+        subscriptions.Add("6ec41746-b529-46bc-ac81-514095105d54",("2023-04-18",(6,18)));
 
-
-        HttpClient client = new HttpClient();
-        var respone = await client.GetAsync(
-            $"https://platform.sweetspot.io/api/tee-times?course.uuid=6ec41746-b529-46bc-ac81-514095105d54&from%5Bafter%5D={d}T00%3A00%3A00%2B02%3A00&from%5Bbefore%5D={d}T23%3A59%3A59%2B02%3A00&limit=100&order%5Bfrom%5D=asc&page=1");
-        var json = respone.Content.ReadAsStringAsync().Result;
-        //var json = File.ReadAllText("../../../json.txt");
-
-        var found = false;
-        List<Booking>? bookings = JsonSerializer.Deserialize<List<Booking>>(json);
-
-        bookings?.ForEach(async b =>
+        foreach (var subscription in subscriptions)
         {
-            var t = b.from.Hour + 2;
-            Console.WriteLine(b.from.Day + " .." + t + ":" + b.from.Minute  + " > " + b.available_slots + " > " + b.category.name);
+            var courseUid = subscription.Key;
+            var date = subscription.Value.date;
+            var interval = subscription.Value.interval;
+            var availableTimes = await TimeFinder.GetAvailibleTimesAtCourseAndDate(courseUid, date, interval);
 
-            if (b.available_slots == 4 &&
-                b.category.name != "Stängd" &&
-                t < 17)
+            if (availableTimes.Count > 0)
             {
-                Console.WriteLine(b.from.Day + " > " + t + ":" + b.from.Minute);
                 var mailService = new EmailService();
-                found =  mailService.SendAsync("cflhammar@gmail.com", t + ":" + b.from.Minute).Result;
-          
+                await mailService.SendAsync("cflhammar@gmail.com", availableTimes);
+                Console.WriteLine("notification sent!");
             }
-        });
-        if (!found)
-        {
-            var current = DateTime.Now;
-            Console.WriteLine("Ingen ledig tid just nu (" + current.Month + "/" + current.Day + " " + current.Hour + ":" +
-                              current.Minute + ")");
+            else
+            {
+                Console.WriteLine($"found nothing at {date} between {interval.from} - {interval.to} ({courseUid})");
+            }
         }
     }
-
-
-
 }
