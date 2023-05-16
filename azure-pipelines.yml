@@ -5,13 +5,13 @@
 
 trigger: none
 
-#schedules:
-#  - cron: "* 5-23 13-15 4 *"
-#    branches:
-#      include:
-#        - main
-#    displayName: Daily run at midnight
-#    always: true
+schedules:
+  - cron: "*/5 5-23 * * *"
+    branches:
+      include:
+        - main
+    displayName: Every 5th minute during daytime
+    always: true
 
 pool:
   vmImage: ubuntu-latest
