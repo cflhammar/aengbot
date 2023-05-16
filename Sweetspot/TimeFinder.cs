@@ -53,8 +53,8 @@ public class TimeFinder
 
             if (b.available_slots == 1 &&
                 b.category.name != "Stängd" &&
-                teeTimeHour == 12 &&
-                teeTimeMinute == 10 )
+                teeTimeHour == 10 &&
+                teeTimeMinute == 30 )
             {
                 availbileTimes.Add((teeTimeHour, teeTimeMinute));
             }
