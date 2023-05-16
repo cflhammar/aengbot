@@ -56,6 +56,7 @@ public class TimeFinder
                 teeTimeHour == 10 &&
                 teeTimeMinute == 30 )
             {
+                Console.WriteLine("-------------------------------------------------------------- FOUND IT");
                 availbileTimes.Add((teeTimeHour, teeTimeMinute));
             }
         });

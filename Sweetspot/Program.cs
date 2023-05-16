@@ -21,7 +21,7 @@ static class Program
             if (availableTimes.Count > 0)
             {
                 var mailService = new EmailService();
-//                await mailService.SendAsync("cflhammar@gmail.com", availableTimes);
+                await mailService.SendAsync("cflhammar@gmail.com", availableTimes);
                 await mailService.SendAsync("d.millner@gmail.com", availableTimes);
                 Console.WriteLine("notification sent!");
             }
