@@ -45,7 +45,8 @@ public class TimeFinder
         var availbileTimes = new List<(int h, int m)>();
         bookings?.ForEach(async b =>
         {
-            var teeTimeHour = b.from.Hour;
+            var devopsOffset = 2;
+            var teeTimeHour = b.from.Hour + devopsOffset;
             var teeTimeMinute = b.from.Minute;
             
             Console.WriteLine(teeTimeHour + "-" + teeTimeMinute + " : " + b.available_slots);
