@@ -48,12 +48,12 @@ public class TimeFinder
             var teeTimeHour = b.from.Hour;
             var teeTimeMinute = b.from.Minute;
             
-            Console.WriteLine(teeTimeHour + "-" + teeTimeMinute);
+            Console.WriteLine(teeTimeHour + "-" + teeTimeMinute + " : " + b.available_slots);
 
             if (b.available_slots == 1 &&
                 b.category.name != "Stängd" &&
-                teeTimeHour == 10 &&
-                teeTimeMinute == 30 )
+                teeTimeHour == 12 &&
+                teeTimeMinute == 10 )
             {
                 availbileTimes.Add((teeTimeHour, teeTimeMinute));
             }
