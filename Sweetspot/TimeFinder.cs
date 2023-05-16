@@ -47,6 +47,8 @@ public class TimeFinder
         {
             var teeTimeHour = b.from.Hour;
             var teeTimeMinute = b.from.Minute;
+            
+            Console.WriteLine(teeTimeHour + "-" + teeTimeMinute);
 
             if (b.available_slots == 1 &&
                 b.category.name != "Stängd" &&
