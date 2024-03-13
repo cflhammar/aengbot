@@ -2,14 +2,21 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>12</LangVersion>
+        <RootNamespace>Aengbot</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="MailKit" Version="3.6.0" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="1-Inbound\" />
+      <Folder Include="3-Outbound\Db\" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
-namespace Sweetspot;
+
+using Aengbot._3_Outbound.Notifications;
+using Aengbot._3_Outbound.TimeFinder;
+
+namespace Aengbot;
 
 static class Program
 {
@@ -22,7 +26,7 @@ static class Program
             {
                 var mailService = new EmailService();
                 await mailService.SendAsync("cflhammar@gmail.com", availableTimes);
-                await mailService.SendAsync("d.millner@gmail.com", availableTimes);
+                
                 Console.WriteLine("notification sent!");
             }
             else

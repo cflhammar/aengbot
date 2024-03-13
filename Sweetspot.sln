@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sweetspot", "Sweetspot\Sweetspot.csproj", "{A0FDDF71-88DB-4700-A3BD-FBCA120960F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aengbot", "Aengbot\Aengbot.csproj", "{A0FDDF71-88DB-4700-A3BD-FBCA120960F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

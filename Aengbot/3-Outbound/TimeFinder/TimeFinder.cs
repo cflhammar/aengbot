@@ -1,7 +1,7 @@
 using System.Text.Json;
-using System.Xml.Schema;
+using Aengbot._2_Domain;
 
-namespace Sweetspot;
+namespace Aengbot._3_Outbound.TimeFinder;
 
 public class TimeFinder
 {

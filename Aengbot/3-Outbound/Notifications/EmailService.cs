@@ -1,10 +1,8 @@
-
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace Sweetspot;
+namespace Aengbot._3_Outbound.Notifications;
 
 public class EmailService 
 {

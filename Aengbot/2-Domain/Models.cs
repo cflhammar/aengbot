@@ -1,6 +1,4 @@
-using System;
-
-namespace Sweetspot;
+namespace Aengbot._2_Domain;
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class Category
