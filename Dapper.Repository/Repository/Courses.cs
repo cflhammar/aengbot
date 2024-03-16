@@ -1,11 +1,8 @@
 using Aengbot.Models;
+using Aengbot.Repositories;
 
 namespace Repository.Repository;
 
-public interface ICourseRepository
-{
-    List<Course> GetCourses(CancellationToken ct);
-}
 
 public class CourseRepository : ICourseRepository
 {

@@ -1,4 +1,6 @@
+using Aengbot;
 using AengbotApi;
+using Asp.Versioning;
 using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +14,16 @@ services.AddControllers();
 services.AddSwaggerGen();
 services.AddEndpointsApiExplorer();
 services.AddDapperServices(configuration);
+services.AddDomainServices(configuration);
 
-
+services.AddEndpointsApiExplorer();
+services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ApiVersionReader = new HeaderApiVersionReader("api-version");
+}).AddApiExplorer(options => options.GroupNameFormat = "'v'VVV");
 
 var app = builder.Build();
 app.RunDbMigrations();

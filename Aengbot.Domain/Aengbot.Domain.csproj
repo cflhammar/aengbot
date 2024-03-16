@@ -10,7 +10,15 @@
 
     <ItemGroup>
       <PackageReference Include="MailKit" Version="3.6.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0-preview.2.24128.5" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+      <PackageReference Include="Scrutor" Version="4.2.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="QueryHandlers\" />
     </ItemGroup>
 
 </Project>

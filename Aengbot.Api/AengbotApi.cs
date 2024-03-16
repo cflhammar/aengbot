@@ -1,14 +1,10 @@
-global using System;
-global using System.Collections.Generic;
 global using System.Threading;
-global using System.Threading.Tasks;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Http;
 global using static Microsoft.AspNetCore.Http.StatusCodes;
-using Aengbot._2_Domain.Handlers;
 using Aengbot.Handlers;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+using Aengbot.Handlers.Command;
+using Aengbot.Handlers.Query;
 
 namespace AengbotApi;
 
@@ -19,21 +15,21 @@ internal static class AengbotAp
         var api = app.NewVersionedApi();
         var v1 = api.MapGroup("/aengbot").HasApiVersion(1);
 
-        app.MapGet("/courses", GetAvailableCourses).Produces<GetCoursesResult>(Status200OK)
+        v1.MapGet("/courses", GetAvailableCourses).Produces(Status200OK, typeof(IResult))
             .Produces(Status400BadRequest);
 
-        app.MapPost("/subscribe", AddSubscription).Produces(Status200OK).Produces(Status400BadRequest);
+        v1.MapPost("/subscribe", AddSubscription).Produces(Status200OK).Produces(Status400BadRequest);
 
         return app;
     }
 
-    private static GetCoursesResult? GetAvailableCourses(CancellationToken ct)
+    private static IResult GetAvailableCourses(CancellationToken ct, IGetCoursesHandler handler)
     {
-        var handler = new GetCoursesHandler(new CoursesProvider());
-        return handler.Handle(ct);
+        var response = handler.Handle(ct);
+        return Results.Ok(response);
     }
 
-    private static IResult? AddSubscription(AddSubscriptionRequest request, CancellationToken ct)
+    private static IResult AddSubscription(AddSubscriptionRequest request, CancellationToken ct, IAddSubscriptionHandler handler)
     {
         var command = new AddSubscriptionCommand(
             request.CourseId, 
@@ -43,7 +39,6 @@ internal static class AengbotAp
             request.NumberOfPlayers, 
             request.Email);
 
-        var handler = new AddSubscriptionHandler();
         if (!handler.Handle(command, ct))
             return Results.BadRequest();
 

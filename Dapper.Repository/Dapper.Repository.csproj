@@ -25,10 +25,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Migrations\Script001-CreateTables.sql" />
-      <EmbeddedResource Include="Migrations\Script001-CreateTables.sql" />
-      <None Remove="Migrations\Script002-AddData.sql" />
-      <EmbeddedResource Include="Migrations\Script002-AddData.sql" />
+        <EmbeddedResource Include="Migrations\*.sql">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </EmbeddedResource>
     </ItemGroup>
 
 </Project>

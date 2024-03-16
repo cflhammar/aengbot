@@ -1,7 +1,4 @@
-using System.Text.Json;
-
-
-namespace Aengbot.Handlers;
+namespace Aengbot.Handlers.Command;
 
 public class FindTimeHandler
 {
