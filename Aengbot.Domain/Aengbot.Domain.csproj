@@ -15,7 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="1-Inbound\" />
       <Folder Include="3-Outbound\Db\" />
     </ItemGroup>
 

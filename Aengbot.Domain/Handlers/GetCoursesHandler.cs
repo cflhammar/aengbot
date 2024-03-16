@@ -1,4 +1,6 @@
-namespace Aengbot._2_Domain.Handlers;
+using Aengbot._2_Domain.Handlers;
+
+namespace Aengbot.Handlers;
 
 public record GetCoursesResult(Dictionary<string,string>? Courses);
 
