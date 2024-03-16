@@ -18,10 +18,17 @@
     <ItemGroup>
       <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="8.0.0" />
       <PackageReference Include="Dapper" Version="2.1.35" />
-      <PackageReference Include="dbup-core" Version="6.0.0-beta.73" />
+      <PackageReference Include="dbup-core" Version="5.0.87" />
       <PackageReference Include="dbup-postgresql" Version="5.0.40" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0-preview.2.24128.5" />
       <PackageReference Include="Npgsql" Version="8.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Migrations\Script001-CreateTables.sql" />
+      <EmbeddedResource Include="Migrations\Script001-CreateTables.sql" />
+      <None Remove="Migrations\Script002-AddData.sql" />
+      <EmbeddedResource Include="Migrations\Script002-AddData.sql" />
     </ItemGroup>
 
 </Project>
