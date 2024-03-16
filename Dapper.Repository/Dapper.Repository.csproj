@@ -8,10 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DataModels\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Aengbot.Domain\Aengbot.Domain.csproj" />
     </ItemGroup>
 

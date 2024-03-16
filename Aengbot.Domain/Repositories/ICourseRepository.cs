@@ -4,5 +4,5 @@ namespace Aengbot.Repositories;
 
 public interface ICourseRepository
 {
-    List<Course> GetCourses(CancellationToken ct);
+    Task<List<Course>> GetCourses(CancellationToken ct);
 }

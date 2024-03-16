@@ -23,9 +23,9 @@ internal static class AengbotAp
         return app;
     }
 
-    private static IResult GetAvailableCourses(CancellationToken ct, IGetCoursesHandler handler)
+    private static async Task<IResult> GetAvailableCourses(CancellationToken ct, IGetCoursesHandler handler)
     {
-        var response = handler.Handle(ct);
+        var response = await handler.Handle(ct);
         return Results.Ok(response);
     }
 

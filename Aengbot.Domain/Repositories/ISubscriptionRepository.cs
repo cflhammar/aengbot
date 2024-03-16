@@ -4,5 +4,5 @@ namespace Aengbot.Repositories;
 
 public interface ISubscriptionRepository
 {
-    bool? AddSubscription(Subscription subscription, CancellationToken ct);
+    Task AddSubscription(Subscription subscription, CancellationToken ct);
 }

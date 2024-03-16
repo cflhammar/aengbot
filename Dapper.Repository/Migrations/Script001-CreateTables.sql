@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS aengbot.courses
 CREATE TABLE IF NOT EXISTS aengbot.subscriptions
 (
     id       SERIAL PRIMARY KEY,
-    courseId varchar(50) NOT NULL,
+    course_id varchar(50) NOT NULL,
     date varchar(10) NOT NULL,
     from_time varchar(5) NOT NULL,
     to_time varchar(5) NOT NULL,
