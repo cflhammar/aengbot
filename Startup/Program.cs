@@ -1,14 +1,22 @@
 using AengbotApi;
+using Repository;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 var services = builder.Services;
+
+using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
+ILogger logger = factory.CreateLogger("Program");
 
 services.AddControllers();
 services.AddSwaggerGen();
 services.AddEndpointsApiExplorer();
+services.AddDapperServices(configuration);
+
 
 
 var app = builder.Build();
+app.RunDbMigrations();
 
 app.UseSwagger();
 app.UseSwaggerUI(options =>
@@ -20,6 +28,7 @@ app.UseSwaggerUI(options =>
 app.UseHttpsRedirection();
 app.MapRestApi();
 app.UseCors("AllowSpecificOrigins");
+
 
 app.Run();
 

@@ -1,6 +1,12 @@
 namespace Aengbot.Handlers;
 
-public record AddSubscriptionCommand(string CourseId);
+public record AddSubscriptionCommand(
+    string CourseId,
+    string Date,
+    string FromTime,
+    string ToTime,
+    int NumberOfPlayers,
+    string Email);
 
 public class AddSubscriptionHandler
 {

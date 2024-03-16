@@ -1,4 +1,4 @@
-namespace Aengbot._2_Domain;
+namespace Sweetspot.External.Api.Models;
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 public class Category

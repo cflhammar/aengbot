@@ -1,4 +1,4 @@
-namespace Aengbot._3_Outbound.Notifications;
+namespace Aengbot.Notification;
 
 public class Notifier
 {

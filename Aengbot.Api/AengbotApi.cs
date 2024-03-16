@@ -19,24 +19,30 @@ internal static class AengbotAp
         var api = app.NewVersionedApi();
         var v1 = api.MapGroup("/aengbot").HasApiVersion(1);
 
-        app.MapGet("/courses", GetAvailableCourses).Produces<GetCoursesResult>(Status200OK).
-            Produces(Status400BadRequest);
+        app.MapGet("/courses", GetAvailableCourses).Produces<GetCoursesResult>(Status200OK)
+            .Produces(Status400BadRequest);
 
         app.MapPost("/subscribe", AddSubscription).Produces(Status200OK).Produces(Status400BadRequest);
 
         return app;
     }
-    
+
     private static GetCoursesResult? GetAvailableCourses(CancellationToken ct)
     {
         var handler = new GetCoursesHandler(new CoursesProvider());
         return handler.Handle(ct);
     }
-    
-    private static IResult? AddSubscription(AddSubscriptionRequest request ,CancellationToken ct)
+
+    private static IResult? AddSubscription(AddSubscriptionRequest request, CancellationToken ct)
     {
-        var command = new AddSubscriptionCommand(request.CourseId);
-        
+        var command = new AddSubscriptionCommand(
+            request.CourseId, 
+            request.Date, 
+            request.FromTime, 
+            request.ToTime,
+            request.NumberOfPlayers, 
+            request.Email);
+
         var handler = new AddSubscriptionHandler();
         if (!handler.Handle(command, ct))
             return Results.BadRequest();
@@ -44,5 +50,11 @@ internal static class AengbotAp
         return Results.Ok();
     }
 
-    private record AddSubscriptionRequest(string CourseId, string FromTime, string ToTime, int NumberOfPlayers);
+    private record AddSubscriptionRequest(
+        string CourseId,
+        string Date,
+        string FromTime,
+        string ToTime,
+        int NumberOfPlayers,
+        string Email);
 }

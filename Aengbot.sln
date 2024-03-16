@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aengbot.Api", "Aengbot.Api\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Startup", "Startup\Startup.csproj", "{25F35F32-27AA-4937-9BEF-A01C39626CD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{F1F7BC18-1A48-4D2D-9795-81D88CDB5742}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.Repository", "Dapper.Repository\Dapper.Repository.csproj", "{F1F7BC18-1A48-4D2D-9795-81D88CDB5742}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sweetspot.External.Api", "Sweetspot.External.Api\Sweetspot.External.Api.csproj", "{5F5EA61C-8AA4-4EA3-91DF-8F31913BF372}"
 EndProject

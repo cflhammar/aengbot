@@ -8,5 +8,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Aengbot.Api\Aengbot.Api.csproj" />
+        <ProjectReference Include="..\Dapper.Repository\Dapper.Repository.csproj" />
     </ItemGroup>
 </Project>
