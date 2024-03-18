@@ -14,7 +14,7 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
             await conn.ExecuteAsync(
                 sql:
                 $"""
-                    INSERT INTO aengbot.subscriptions (course_id, date, from_time, to_time, number_players, email)
+                    INSERT INTO Subscriptions (CourseId, Date, FromTime, ToTime, NumberPlayers, Email)
                      VALUES (@CourseId, @Date, @FromTime, @ToTime, @NumberOfPlayers, @Email);
                  """,
                 param: new

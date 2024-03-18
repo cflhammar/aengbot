@@ -1,6 +1,7 @@
 ﻿using System.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Npgsql;
+
 
 namespace Repository;
 public class SqlConnectionFactory : ISqlConnectionFactory
@@ -15,7 +16,7 @@ public class SqlConnectionFactory : ISqlConnectionFactory
     }
 
     public IDbConnection Create()
-        => new NpgsqlConnection(ConnectionString);
+        => new SqlConnection(ConnectionString);
 }
 
 public interface ISqlConnectionFactory

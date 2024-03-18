@@ -16,7 +16,7 @@ public class CourseRepository(ISqlConnectionFactory sqlConnectionFactory) : ICou
         using var conn = sqlConnectionFactory.Create();
         var courses = await conn.QueryAsync<CourseDataModel?>(
             sql: $"""
-                  SELECT Id, Name FROM aengbot.courses
+                  SELECT Id, Name FROM Courses
                   """);
 
         return courses.Select(Map!).ToList();

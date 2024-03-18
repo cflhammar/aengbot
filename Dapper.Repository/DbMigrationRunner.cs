@@ -19,11 +19,11 @@ public class DbMigrationRunner : IDbMigrationRunner
 
     public void Run()
     {
-        EnsureDatabase.For.PostgresqlDatabase(_connectionString);
+        EnsureDatabase.For.SqlDatabase(_connectionString);
 
         var upgradeEngine =
             DeployChanges.To
-                .PostgresqlDatabase(_connectionString)
+                .SqlDatabase(_connectionString)
                 .WithScriptsAndCodeEmbeddedInAssembly(typeof(DbMigrationRunner).Assembly)
                 .LogToConsole()
                 .LogScriptOutput()

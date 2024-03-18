@@ -1,20 +1,19 @@
-CREATE SCHEMA IF NOT EXISTS aengbot;
 
-CREATE TABLE IF NOT EXISTS aengbot.courses
+CREATE TABLE Courses
 (
-    id   varchar(50) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    Id   varchar(50) PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS aengbot.subscriptions
+CREATE TABLE Subscriptions
 (
-    id       SERIAL PRIMARY KEY,
-    course_id varchar(50) NOT NULL,
-    date varchar(10) NOT NULL,
-    from_time varchar(5) NOT NULL,
-    to_time varchar(5) NOT NULL,
-    number_players int NOT NULL,
-    email varchar(255) NOT NULL
+    Id int NOT NULL IDENTITY PRIMARY KEY,
+    CourseId varchar(50) NOT NULL,
+    Date varchar(10) NOT NULL,
+    FromTime varchar(5) NOT NULL,
+    ToTime varchar(5) NOT NULL,
+    NumberPlayers int NOT NULL,
+    Email varchar(255) NOT NULL
 );
 
 

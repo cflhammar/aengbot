@@ -15,7 +15,7 @@ public static class ServiceExtensions
         services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
         // services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddHealthChecks()
-            .AddNpgSql(new SqlConnectionFactory(configuration).ConnectionString,
+            .AddSqlServer(new SqlConnectionFactory(configuration).ConnectionString,
                 tags: new[] { "StartupHealthCheck" }, timeout: TimeSpan.FromSeconds(3));
     }
 }
