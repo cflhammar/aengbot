@@ -34,4 +34,54 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
             throw;
         }
     }
+
+    public async Task<List<Subscription>> GetSubscriptions(CancellationToken ct)
+    {
+        try
+        {
+            using var conn = sqlConnectionFactory.Create();
+            var subs = await conn.QueryAsync<SubscriptionDataModel?>(
+                sql:
+                $"""
+                    SELECT (CourseId, Date, FromTime, ToTime, NumberPlayers, Email)
+                    FROM Subscriptions
+                    WHERE Date >= @Date AND ToTime >= @ToTime
+                 """,
+                param: new
+                {
+                    DateTime.Now.Date,
+                    ToTime = DateTime.Now.TimeOfDay
+                }
+            );
+            
+            return subs.Select(Map!).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    private Subscription Map(SubscriptionDataModel dataModel)
+    {
+        return new Subscription()
+        {
+            CourseId = dataModel.CourseId,
+            Date = dataModel.Date,
+            FromTime = dataModel.FromTime,
+            ToTime = dataModel.ToTime,
+            NumberOfPlayers = dataModel.NumberOfPlayers,
+            Email = dataModel.Email
+        };
+    }
+
+    public record SubscriptionDataModel(
+        string CourseId,
+        string Date,
+        string FromTime,
+        string ToTime,
+        int NumberOfPlayers,
+        string Email
+    );
 }

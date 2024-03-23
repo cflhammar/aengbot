@@ -1,7 +1,22 @@
 namespace Aengbot.Handlers.Command;
 
-public class FindTimeHandler
+public interface IFindTimeHandler : ICommandHandler
 {
+    bool Handle();
+}
+
+public class FindTimeHandler : IFindTimeHandler
+{
+    public bool Handle()
+    {
+        
+        
+        
+        
+        
+        return true;
+    }
+    
     // public static async Task<List<(int, int)>> GetAvailibleTimesAtCourseAndDate(string courseUid, string date,
     //     (int from, int to) hourInterval)
     // {
