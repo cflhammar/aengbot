@@ -14,13 +14,12 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
             await conn.ExecuteAsync(
                 sql:
                 $"""
-                    INSERT INTO Subscriptions (CourseId, Date, FromTime, ToTime, NumberPlayers, Email)
-                     VALUES (@CourseId, @Date, @FromTime, @ToTime, @NumberOfPlayers, @Email);
+                    INSERT INTO Subscriptions (CourseId, FromTime, ToTime, NumberPlayers, Email)
+                     VALUES (@CourseId, @FromTime, @ToTime, @NumberOfPlayers, @Email);
                  """,
                 param: new
                 {
                     subscription.CourseId,
-                    subscription.Date,
                     subscription.FromTime,
                     subscription.ToTime,
                     subscription.NumberOfPlayers,
@@ -40,17 +39,16 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
         try
         {
             using var conn = sqlConnectionFactory.Create();
-            var subs = await conn.QueryAsync<SubscriptionDataModel?>(
+            var subs = await conn.QueryAsync<SubscriptionDataModel?>( 
                 sql:
                 $"""
-                    SELECT (CourseId, Date, FromTime, ToTime, NumberPlayers, Email)
+                    SELECT CourseId, FromTime, ToTime, NumberPlayers, Email
                     FROM Subscriptions
-                    WHERE Date >= @Date AND ToTime >= @ToTime
+                    WHERE ToTime >= @ToTime
                  """,
                 param: new
                 {
-                    DateTime.Now.Date,
-                    ToTime = DateTime.Now.TimeOfDay
+                    ToTime = DateTime.Now
                 }
             );
             
@@ -68,20 +66,18 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
         return new Subscription()
         {
             CourseId = dataModel.CourseId,
-            Date = dataModel.Date,
             FromTime = dataModel.FromTime,
             ToTime = dataModel.ToTime,
-            NumberOfPlayers = dataModel.NumberOfPlayers,
+            NumberOfPlayers = dataModel.NumberPlayers,
             Email = dataModel.Email
         };
     }
 
     public record SubscriptionDataModel(
         string CourseId,
-        string Date,
-        string FromTime,
-        string ToTime,
-        int NumberOfPlayers,
+        DateTime FromTime,
+        DateTime ToTime,
+        Int32 NumberPlayers,
         string Email
     );
 }

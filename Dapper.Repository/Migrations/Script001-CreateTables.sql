@@ -9,9 +9,8 @@ CREATE TABLE Subscriptions
 (
     Id int NOT NULL IDENTITY PRIMARY KEY,
     CourseId varchar(50) NOT NULL,
-    Date varchar(10) NOT NULL,
-    FromTime varchar(5) NOT NULL,
-    ToTime varchar(5) NOT NULL,
+    FromTime datetime NOT NULL,
+    ToTime datetime NOT NULL,
     NumberPlayers int NOT NULL,
     Email varchar(255) NOT NULL
 );

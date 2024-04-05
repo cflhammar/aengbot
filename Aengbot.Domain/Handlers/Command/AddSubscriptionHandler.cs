@@ -5,9 +5,8 @@ namespace Aengbot.Handlers.Command;
 
 public record AddSubscriptionCommand(
     string CourseId,
-    string Date,
-    string FromTime,
-    string ToTime,
+    DateTime FromTime,
+    DateTime ToTime,
     int NumberOfPlayers,
     string Email);
 
@@ -23,7 +22,6 @@ public class AddSubscriptionHandler(ISubscriptionRepository repository) : IAddSu
         var subscription = new Subscription()
         {
             CourseId = command.CourseId,
-            Date = command.Date,
             FromTime = command.FromTime,
             ToTime = command.ToTime,
             NumberOfPlayers = command.NumberOfPlayers,

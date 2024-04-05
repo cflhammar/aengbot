@@ -1,7 +1,9 @@
 using Aengbot;
+using Aengbot.Notification;
 using AengbotApi;
 using Asp.Versioning;
 using Repository;
+using Sweetspot.External.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -15,6 +17,9 @@ services.AddSwaggerGen();
 services.AddEndpointsApiExplorer();
 services.AddDapperServices(configuration);
 services.AddDomainServices(configuration);
+
+services.AddScoped<INotifier,Notifier>();
+services.AddHttpClient<ISweetSpotApi, SweetSpotApi>();
 
 services.AddEndpointsApiExplorer();
 services.AddApiVersioning(options =>

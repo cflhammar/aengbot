@@ -3,7 +3,7 @@ using Aengbot.Repositories;
 
 namespace Aengbot.Handlers.Query;
 
-public record GetSubscriptionsResult(List<Subscription>? Courses);
+public record GetSubscriptionsResult(List<Subscription>? Subscriptions);
 
 public interface IGetSubscriptionsHandler : IQueryHandler
 {

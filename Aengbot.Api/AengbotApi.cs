@@ -1,8 +1,4 @@
-global using System.Threading;
-global using Microsoft.AspNetCore.Builder;
-global using Microsoft.AspNetCore.Http;
 global using static Microsoft.AspNetCore.Http.StatusCodes;
-using Aengbot.Handlers;
 using Aengbot.Handlers.Command;
 using Aengbot.Handlers.Query;
 
@@ -26,9 +22,9 @@ internal static class AengbotAp
         return app;
     }
     
-    private static IResult Trigger(CancellationToken ct, ITriggerHandler handler)
+    private static async Task<IResult> Trigger(CancellationToken ct, ITriggerHandler handler)
     {
-        var response = handler.Handle(ct);
+        var response = await handler.Handle(ct);
         return Results.Ok(response);
     }
 
@@ -42,7 +38,6 @@ internal static class AengbotAp
     {
         var command = new AddSubscriptionCommand(
             request.CourseId, 
-            request.Date, 
             request.FromTime, 
             request.ToTime,
             request.NumberOfPlayers, 
@@ -56,9 +51,8 @@ internal static class AengbotAp
 
     private record AddSubscriptionRequest(
         string CourseId,
-        string Date,
-        string FromTime,
-        string ToTime,
+        DateTime FromTime,
+        DateTime ToTime,
         int NumberOfPlayers,
         string Email);
 }
