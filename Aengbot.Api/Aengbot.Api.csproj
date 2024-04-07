@@ -7,6 +7,7 @@
         <InvariantGlobalization>true</InvariantGlobalization>
         <RootNamespace>AengbotApi</RootNamespace>
         <OutputType>Library</OutputType>
+        <UserSecretsId>cdd2223e-d08d-4a91-a412-538269ac503e</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

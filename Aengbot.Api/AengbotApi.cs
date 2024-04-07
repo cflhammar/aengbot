@@ -11,12 +11,15 @@ internal static class AengbotAp
         var api = app.NewVersionedApi();
         var v1 = api.MapGroup("/aengbot").HasApiVersion(1);
 
+        v1.MapGet("/wakeUp", () => Results.Ok("I'm awake!")).Produces(Status200OK).Produces(Status400BadRequest);
+        
         v1.MapGet("/trigger", Trigger).Produces(Status200OK).Produces(Status400BadRequest);
         
         v1.MapGet("/courses", GetAvailableCourses).Produces(Status200OK, typeof(IResult))
             .Produces(Status400BadRequest);
 
         v1.MapPost("/subscribe", AddSubscription).Produces(Status200OK).Produces(Status400BadRequest);
+        
         
 
         return app;

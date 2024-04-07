@@ -2,6 +2,7 @@ using Aengbot;
 using Aengbot.Notification;
 using AengbotApi;
 using Asp.Versioning;
+using Microsoft.OpenApi.Models;
 using Repository;
 using Sweetspot.External.Api;
 
@@ -13,7 +14,32 @@ using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsol
 ILogger logger = factory.CreateLogger("Program");
 
 services.AddControllers();
-services.AddSwaggerGen();
+services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("apiKey", new OpenApiSecurityScheme()
+    {
+        Description = "API KEY",
+        Name = "X_API_KEY",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "apiKey"
+                }
+            },
+            Array.Empty<string>()
+        },
+    });
+
+});
 services.AddEndpointsApiExplorer();
 services.AddDapperServices(configuration);
 services.AddDomainServices(configuration);
@@ -39,6 +65,7 @@ app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
+    
 });
 
 app.UseHttpsRedirection();
