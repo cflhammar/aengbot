@@ -10,13 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wake up app
-        uses: fjogeleit/http-request-action@main
+        uses: satak/webrequest-action@master
         with:
-          retry: 5
-          retryWait: 3000
           url: 'https://aenbot-api.azurewebsites.net/aengbot/wakeUp'
-          method: 'GET'
-          customHeaders: '{"X_API_KEY": "${{ secrets.AENGBOT_API_KEY }}"}'
+          method: GET
+          headers: '{"X_API_KEY": "${{ secrets.AENGBOT_API_KEY }}"}'
+          
+      - name: Sleep for 30 seconds
+        run: sleep 30s
+        shell: bash
+        
+      - name: Wake up app
+        uses: satak/webrequest-action@master
+        with:
+          url: 'https://aenbot-api.azurewebsites.net/aengbot/wakeUp'
+          method: GET
+          headers: '{"X_API_KEY": "${{ secrets.AENGBOT_API_KEY }}"}'
+          
+      - name: Sleep for 10 seconds
+        run: sleep 10s
+        shell: bash
 
       - name: Run app
         uses: fjogeleit/http-request-action@main
