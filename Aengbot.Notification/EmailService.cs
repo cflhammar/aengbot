@@ -2,35 +2,29 @@
 // using MailKit.Security;
 // using MimeKit;
 
+using System.Net;
+using System.Net.Mail;
+using MailKit.Security;
+using MimeKit;
+
 namespace Aengbot.Notification;
 
-public class EmailService 
+public interface IEmailService
 {
-    // public async Task SendAsync(string email, List<(int,int)> teeTimes)
-    // {
-    //     var mail = new MimeMessage();
-    //     mail.From.Add(new MailboxAddress("TeeTime Finder", "cflhammar@gmail.com"));
-    //     mail.Sender = new MailboxAddress("TeeTime Finder", "cflhammar@gmail.com");
-    //     mail.To.Add(MailboxAddress.Parse(email));
-    //     var body = new BodyBuilder();
-    //     mail.Subject = "Ledig tid!!";
-    //     body.HtmlBody = Stringify(teeTimes);
-    //     mail.Body = body.ToMessageBody();
-    //     using var smtp = new SmtpClient();
-    //     
-    //     await smtp.ConnectAsync("smtp-relay.sendinblue.com", 587, SecureSocketOptions.StartTls);
-    //     await smtp.AuthenticateAsync("cflhammar@gmail.com", "0GHbpB1YXV73EhQv");
-    //     await smtp.SendAsync(mail);
-    //     await smtp.DisconnectAsync(true);
-    // }
-    //
-    // private string Stringify(List<(int hour, int minute)> times)
-    // {
-    //     string s = "";
-    //     times.ForEach(t =>
-    //     {
-    //         s += t.hour + ":" + t.minute + "\n";
-    //     });
-    //     return s;
-    // }
+    void SendEmail(MailMessage message, string courseName);
+}
+
+public class EmailService : IEmailService
+{
+    public void SendEmail(MailMessage message, string courseName)
+    {
+        using var smtp = new SmtpClient();
+        smtp.Host = "smtp-relay.sendinblue.com";
+        smtp.Port = 587;
+        smtp.UseDefaultCredentials = false;
+        smtp.Credentials = new NetworkCredential("cflhammar@gmail.com", "");
+
+        smtp.Send(message);
+        Console.WriteLine($"Email sent to {message.To} for course: {courseName}");
+    }
 }

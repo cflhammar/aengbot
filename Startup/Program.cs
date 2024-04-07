@@ -18,6 +18,7 @@ services.AddEndpointsApiExplorer();
 services.AddDapperServices(configuration);
 services.AddDomainServices(configuration);
 
+services.AddScoped<IEmailService,EmailService>();
 services.AddScoped<INotifier,Notifier>();
 services.AddHttpClient<ISweetSpotApi, SweetSpotApi>();
 

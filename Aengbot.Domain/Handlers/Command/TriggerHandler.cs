@@ -11,7 +11,7 @@ public interface ITriggerHandler : ICommandHandler
     Task<bool> Handle(CancellationToken ct);
 }
 
-public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubscriptionsHandler, INotifier notifier)
+public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubscriptionsHandler, IGetCoursesHandler getCoursesHandler, INotifier notifier)
     : ITriggerHandler
 {
     public async Task<bool> Handle(CancellationToken ct)
@@ -25,23 +25,19 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
             foreach (var sub in activeSubs.Subscriptions)
             {
                 // get bookings (change to sub data)
-                var bookings = await api.GetBookings(
-                    "dummyId",
-                    new DateTime(2023, 04, 22, 05, 00, 00),
-                    new DateTime(2023, 04, 22, 18, 00, 00));
-                var aengbotBookins = bookings?.Select(Map).ToList();
+                var bookings = await api.GetBookings(sub.CourseId, sub.FromTime, sub.ToTime, sub.NumberOfPlayers);
+                    // "dummyId",
+                    // new DateTime(2023, 04, 22, 05, 00, 00),
+                    // new DateTime(2023, 04, 22, 18, 00, 00));
+                var available = bookings?.Select(Map).ToList();
                 
-                // filter times 
-                var bookingsWithAvailableSpots = aengbotBookins?.Where(b => b.AvailableSlots >= sub.NumberOfPlayers).ToList();
-
                 // send notification
-                notifier.Notify(bookingsWithAvailableSpots?.Select(Map).ToList(), sub.Email);
+                if (available != null && available.Any())
+                {
+                    var courseName = await getCoursesHandler.GetCourseName(sub.CourseId);
+                    notifier.Notify(available.Select(Map).ToList(), sub.Email, courseName);
+                }
             }
-
-
-            // filter times 
-
-            // send notification
         }
 
         return true;
