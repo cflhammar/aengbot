@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wake up app
-        uses: fjogeleit/http-request-action@1.15.4
+        uses: fjogeleit/http-request-action@main
         with:
           retry: 5
           retryDelay: 30
@@ -19,7 +19,7 @@ jobs:
           customHeaders: '{"X_API_KEY": "${{ secrets.AENGBOT_API_KEY }}"}'
 
       - name: Run app
-        uses: fjogeleit/http-request-action@1.15.4
+        uses: fjogeleit/http-request-action@main
         with:
           url: 'https://aenbot-api.azurewebsites.net/aengbot/trigger'
           method: 'GET'
