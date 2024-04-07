@@ -31,7 +31,7 @@ public class Notifier(IEmailService service) : INotifier
          string s = $"Lediga tider hittade på {courseName}: \n";
          bookings.ForEach(b =>
          {
-             s += b.Date + "(" + b.AvailableSlots + ")" +"\n";
+             s += b.Date.ToString("yyyy/MM/dd HH:mm") + "(" + b.AvailableSlots + ")" +"\n";
          });
          return s;
      }
