@@ -4,7 +4,7 @@ using Aengbot.Handlers.Query;
 
 namespace AengbotApi;
 
-internal static class AengbotAp
+internal static class AengbotApi
 {
     public static WebApplication MapAengbotApi(this WebApplication app)
     {
