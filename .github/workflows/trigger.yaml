@@ -31,10 +31,9 @@ jobs:
         run: sleep 10s
         shell: bash
 
-      - name: Run app
-        uses: fjogeleit/http-request-action@main
+      - name: Wake up app
+        uses: satak/webrequest-action@master
         with:
           url: 'https://aenbot-api.azurewebsites.net/aengbot/trigger'
-          method: 'GET'
-          password: ${{ secrets.AWX_PASSWORD }}
-          customHeaders: '{"X_API_KEY": "${{ secrets.AENGBOT_API_KEY }}"}'
+          method: GET
+          headers: '{"X_API_KEY": "${{ secrets.AENGBOT_API_KEY }}"}'

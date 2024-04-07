@@ -3,7 +3,7 @@ namespace AengbotApi.Middleware;
 public class ApiKeyMiddleware {
     private readonly RequestDelegate _next;
     private
-        const string APIKEY = "X_API_KEY";
+        const string APIKEY = "XAPIKEY";
     public ApiKeyMiddleware(RequestDelegate next) {
         _next = next;
     }

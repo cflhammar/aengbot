@@ -19,7 +19,7 @@ services.AddSwaggerGen(c =>
     c.AddSecurityDefinition("apiKey", new OpenApiSecurityScheme()
     {
         Description = "API KEY",
-        Name = "X_API_KEY",
+        Name = "XAPIKEY",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey
     });
