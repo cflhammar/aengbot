@@ -4,10 +4,12 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <UserSecretsId>f1800571-548f-4ad3-bf46-82639e81502b</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="MailKit" Version="3.6.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0-preview.2.24128.5" />
       <PackageReference Include="MimeKit" Version="3.6.0" />
     </ItemGroup>
 
