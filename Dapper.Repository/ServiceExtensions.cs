@@ -1,4 +1,5 @@
-﻿using Aengbot.Repositories;
+﻿using Aengbot.Notification;
+using Aengbot.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Repository;
@@ -13,6 +14,7 @@ public static class ServiceExtensions
         services.AddScoped<IDbMigrationRunner, DbMigrationRunner>();
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
         // services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddHealthChecks()
             .AddSqlServer(new SqlConnectionFactory(configuration).ConnectionString,
