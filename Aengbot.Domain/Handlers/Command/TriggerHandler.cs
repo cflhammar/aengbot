@@ -17,38 +17,38 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
 {
     public async Task<bool> Handle(CancellationToken ct)
     {
-        // figure out what courses and what dates here
-        // for each subscription...
         var activeSubs = await getSubscriptionsHandler.Handle(ct);
 
         if (activeSubs.Subscriptions != null)
         {
-            foreach (var sub in activeSubs.Subscriptions)
+            var emails = activeSubs.Subscriptions.Select(s => s.Email).Distinct().ToList();
+
+            foreach (var email in emails)
             {
-                // get bookings (change to sub data)
-                var bookings = await api.GetBookings(sub.CourseId, sub.FromTime, sub.ToTime, sub.NumberOfPlayers);
-                    // "dummyId",
-                    // new DateTime(2023, 04, 22, 05, 00, 00),
-                    // new DateTime(2023, 04, 22, 18, 00, 00));
-                var available = bookings?.Select(Map).ToList();
+                var availableBookingsToNotify = new List<AengbotBooking>();
                 
-                var availableAndNotNotified = new List<AengbotBooking>();
-                foreach (var aengbotBooking in available!)
+                // find available/not-notified bookings for each email/user and its subscriptions
+                foreach (var sub in activeSubs.Subscriptions.Where(s => s.Email == email))
                 {
-                    if (!await notificationRepository.WasNotified(aengbotBooking.CourseId, aengbotBooking.Date, sub.Email))
+                    var externalBookings = await api.GetBookings(sub.CourseId, sub.FromTime, sub.ToTime, sub.NumberOfPlayers);
+                    var availableBookings = externalBookings?.Select(Map).ToList();
+                    foreach (var aengbotBooking in availableBookings!)
                     {
-                        availableAndNotNotified.Add(aengbotBooking);
+                        if (!await notificationRepository.WasNotified(aengbotBooking.CourseId, aengbotBooking.Date, sub.Email))
+                        {
+                            aengbotBooking.CourseName = await getCoursesHandler.GetCourseName(aengbotBooking.CourseId);
+                            availableBookingsToNotify.Add(aengbotBooking);
+                        }
                     }
                 }
-                
-                // send notification
-                if (availableAndNotNotified.Any())
+                if (availableBookingsToNotify.Any())
                 {
-                    var courseName = await getCoursesHandler.GetCourseName(sub.CourseId);
-                    notifier.Notify(availableAndNotNotified.Select(Map).ToList(), sub.Email, courseName);
-                    foreach (var booking in availableAndNotNotified)
+                    var notificationBookings = availableBookingsToNotify.Select(Map).ToList();
+                    
+                    notifier.Notify(notificationBookings, email);
+                    foreach (var booking in notificationBookings)
                     {
-                        await notificationRepository.AddNotified(booking.CourseId, booking.Date, sub.Email);
+                        await notificationRepository.AddNotified(booking.CourseId, booking.Date, email);
                     }
                 }
             }
@@ -72,6 +72,7 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
     {
         return new NotificationBooking
         {
+            CourseName = booking.CourseName,
             CourseId = booking.CourseId,
             Date = booking.Date,
             AvailableSlots = booking.AvailableSlots

@@ -18,10 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="QueryHandlers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Aengbot.Notification\Aengbot.Notification.csproj" />
       <ProjectReference Include="..\Sweetspot.External.Api\Sweetspot.External.Api.csproj" />
     </ItemGroup>
