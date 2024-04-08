@@ -28,7 +28,7 @@ internal static class AengbotApi
     private static async Task<IResult> Trigger(CancellationToken ct, ITriggerHandler handler)
     {
         var response = await handler.Handle(ct);
-        return Results.Ok(response);
+        return Results.Ok("Notification sent to: " + string.Join(", ", response));
     }
 
     private static async Task<IResult> GetAvailableCourses(CancellationToken ct, IGetCoursesHandler handler)

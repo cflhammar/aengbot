@@ -9,14 +9,15 @@ namespace Aengbot.Handlers.Command;
 
 public interface ITriggerHandler : ICommandHandler
 {
-    Task<bool> Handle(CancellationToken ct);
+    Task<List<string>> Handle(CancellationToken ct);
 }
 
 public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubscriptionsHandler, IGetCoursesHandler getCoursesHandler, INotifier notifier, INotificationRepository notificationRepository)
     : ITriggerHandler
 {
-    public async Task<bool> Handle(CancellationToken ct)
+    public async Task<List<string>> Handle(CancellationToken ct)
     {
+        var sent = new List<string>();
         var activeSubs = await getSubscriptionsHandler.Handle(ct);
 
         if (activeSubs.Subscriptions != null)
@@ -46,6 +47,7 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
                     var notificationBookings = availableBookingsToNotify.Select(Map).ToList();
                     
                     notifier.Notify(notificationBookings, email);
+                    sent.Add(email);
                     foreach (var booking in notificationBookings)
                     {
                         await notificationRepository.AddNotified(booking.CourseId, booking.Date, email);
@@ -54,7 +56,7 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
             }
         }
 
-        return true;
+        return sent;
     }
     
     
