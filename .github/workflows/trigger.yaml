@@ -1,7 +1,7 @@
 name: Run aengbot
 
 on:
-  schedule:
+#  schedule:
 #    - cron: "*/15 8-23 * * *"
   workflow_dispatch:    
       
