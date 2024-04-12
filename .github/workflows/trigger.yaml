@@ -2,7 +2,7 @@ name: Run aengbot
 
 on:
   schedule:
-    - cron: "*/15 8-23 * * *"
+#    - cron: "*/15 8-23 * * *"
   workflow_dispatch:    
       
 jobs:
@@ -20,7 +20,7 @@ jobs:
         run: sleep 30s
         shell: bash
         
-      - name: Wake up app
+      - name: Wake up app again
         uses: satak/webrequest-action@master
         with:
           url: 'https://aenbot-api.azurewebsites.net/aengbot/wakeUp'
@@ -31,7 +31,7 @@ jobs:
         run: sleep 10s
         shell: bash
 
-      - name: Wake up app
+      - name: Trigger scan
         uses: satak/webrequest-action@master
         with:
           url: 'https://aenbot-api.azurewebsites.net/aengbot/trigger'
