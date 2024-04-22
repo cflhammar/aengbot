@@ -1,6 +1,7 @@
 global using static Microsoft.AspNetCore.Http.StatusCodes;
 using Aengbot.Handlers.Command;
 using Aengbot.Handlers.Query;
+using Microsoft.AspNetCore.Cors;
 
 namespace AengbotApi;
 
@@ -14,7 +15,7 @@ internal static class AengbotApi
         v1.MapGet("/wakeUp", () => Results.Ok("I'm awake!")).Produces(Status200OK).Produces(Status400BadRequest);
         
         v1.MapGet("/trigger", Trigger).Produces(Status200OK).Produces(Status400BadRequest);
-        
+
         v1.MapGet("/courses", GetAvailableCourses).Produces(Status200OK, typeof(IResult))
             .Produces(Status400BadRequest);
 
@@ -24,13 +25,13 @@ internal static class AengbotApi
 
         return app;
     }
-    
+
     private static async Task<IResult> Trigger(CancellationToken ct, ITriggerHandler handler)
     {
         var response = await handler.Handle(ct);
         return Results.Ok("Notification sent to: " + string.Join(", ", response));
     }
-
+    
     private static async Task<IResult> GetAvailableCourses(CancellationToken ct, IGetCoursesHandler handler)
     {
         var response = await handler.Handle(ct);
