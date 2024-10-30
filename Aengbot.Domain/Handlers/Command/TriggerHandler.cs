@@ -24,6 +24,7 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
         {
             var emails = activeSubs.Subscriptions.Select(s => s.Email).Distinct().ToList();
 
+            // TODO: handle when email is not email format
             foreach (var email in emails)
             {
                 var availableBookingsToNotify = new List<AengbotBooking>();

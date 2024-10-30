@@ -11,4 +11,8 @@
         <ProjectReference Include="..\Aengbot.Api\Aengbot.Api.csproj" />
         <ProjectReference Include="..\Dapper.Repository\Dapper.Repository.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    </ItemGroup>
 </Project>

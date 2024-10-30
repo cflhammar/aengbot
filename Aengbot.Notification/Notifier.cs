@@ -35,8 +35,8 @@ public class Notifier(IEmailService service) : INotifier
             s += $"Lediga tider hittade på {course}: \n";
             foreach (var booking in bookings.Where(b => b.CourseName == course))
             {
-                // adding 2 hours here to return date in swedish summertime
-                s += booking.Date.AddHours(2).ToString("yyyy/MM/dd HH:mm") + "  (" + booking.AvailableSlots + ")" +
+                // will return time in swedish winter time
+                s += booking.Date.ToString("yyyy/MM/dd HH:mm") + "  (" + booking.AvailableSlots + ")" +
                      "\n";
             }
             s += $"-\n";

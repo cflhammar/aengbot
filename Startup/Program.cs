@@ -13,21 +13,22 @@ var services = builder.Services;
 using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
 ILogger logger = factory.CreateLogger("Program");
 
-const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: myAllowSpecificOrigins,
-        policy  =>
-        {
-            // policy.WithOrigins("*");
-            // policy.WithHeaders("Origin", "Content-Type", "XAPIKEY");
-            // policy.WithMethods("GET", "POST", "OPTIONS");
-            policy.AllowAnyOrigin();
-            policy.AllowAnyHeader();
-            policy.AllowAnyMethod();
 
-        });
-});
+//
+// services.AddCors(options =>
+// {
+//     options.AddDefaultPolicy(
+//         policy  =>
+//         {
+//             // policy.WithOrigins("*");
+//             // policy.WithHeaders("Origin", "Content-Type", "XAPIKEY");
+//             // policy.WithMethods("GET", "POST", "OPTIONS");
+//             policy.AllowAnyOrigin();
+//             policy.AllowAnyHeader();
+//             policy.AllowAnyMethod();
+//
+//         });
+// });
 
 services.AddControllers();
 services.AddSwaggerGen(c =>
@@ -74,6 +75,12 @@ services.AddApiVersioning(options =>
 }).AddApiExplorer(options => options.GroupNameFormat = "'v'VVV");
 
 var app = builder.Build();
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+});
 app.RunDbMigrations();
 
 app.UseSwagger();
@@ -86,11 +93,8 @@ app.UseSwaggerUI(options =>
 
 app.UseHttpsRedirection();
 app.MapRestApi();
-app.UseCors(myAllowSpecificOrigins);
-
 
 app.Run();
-
 
 public partial class Program
 {
