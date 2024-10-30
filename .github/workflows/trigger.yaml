@@ -2,9 +2,9 @@ name: Run aengbot
 
 on:
   schedule:
-    - cron: "*/10 8-23 * * *"
-  workflow_dispatch:    
-      
+    - cron: '0,5,10,15,20,25,30,35,40,45,50,55 8-23 * * *'
+  workflow_dispatch:
+
 jobs:
   RunAengbot:
     runs-on: ubuntu-latest
