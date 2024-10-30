@@ -24,12 +24,12 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
         {
             var emails = activeSubs.Subscriptions.Select(s => s.Email).Distinct().ToList();
 
-            // TODO: handle when email is not email format
             foreach (var email in emails)
             {
                 var availableBookingsToNotify = new List<AengbotBooking>();
                 
                 // find available/not-notified bookings for each email/user and its subscriptions
+                // fix logic, remove notified from subs?
                 foreach (var sub in activeSubs.Subscriptions.Where(s => s.Email == email))
                 {
                     var externalBookings = await api.GetBookings(sub.CourseId, sub.FromTime, sub.ToTime, sub.NumberOfPlayers);

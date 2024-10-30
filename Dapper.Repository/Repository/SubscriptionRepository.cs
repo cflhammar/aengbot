@@ -44,11 +44,11 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
                 $"""
                     SELECT CourseId, FromTime, ToTime, NumberPlayers, Email
                     FROM Subscriptions
-                    WHERE ToTime >= @ToTime
+                    WHERE ToTime >= @Now
                  """,
                 param: new
                 {
-                    ToTime = DateTime.Now
+                     Now = DateTime.Now
                 }
             );
             

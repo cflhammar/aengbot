@@ -29,7 +29,7 @@ public class SweetSpotApi(HttpClient client) : ISweetSpotApi
     private bool IsPlayableNotFullAndWithinTimeInterval(Booking booking, DateTime fromTime, DateTime toTime,
         int numberOfPlayers)
     {
-        return booking.category.name != "Stängd" &&
+        return booking.category.name != "Stängd" && booking.category.custom_name != "Tävling" &&
                booking.from.AddSeconds(1) >= fromTime && booking.from.AddSeconds(-1) <= toTime &&
                booking.available_slots >= numberOfPlayers;
     }
