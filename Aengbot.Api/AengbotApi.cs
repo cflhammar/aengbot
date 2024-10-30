@@ -20,8 +20,6 @@ internal static class AengbotApi
             .Produces(Status400BadRequest);
 
         v1.MapPost("/subscribe", AddSubscription).Produces(Status200OK).Produces(Status400BadRequest);
-        
-        
 
         return app;
     }
@@ -47,10 +45,11 @@ internal static class AengbotApi
             request.NumberOfPlayers, 
             request.Email);
 
-        if (!handler.Handle(command, ct))
-            return Results.BadRequest();
+        var errors = handler.Handle(command, ct);
+        if (errors.Count != 0)
+            return Results.BadRequest(errors);
 
-        return Results.Ok();
+        return Results.Ok("Subscription added successfully");
     }
 
     private record AddSubscriptionRequest(
