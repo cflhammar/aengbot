@@ -10,26 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wake up app
-        uses: satak/webrequest-action@master
+        uses: nick-fields/retry@v3
         with:
-          url: 'https://aenbot-api.azurewebsites.net/aengbot/wakeUp'
-          method: GET
-          headers: '{"XAPIKEY": "${{ secrets.AENGBOT_API_KEY }}"}'
-          
-      - name: Sleep for 15 seconds
-        run: sleep 15s
-        shell: bash
-        
-      - name: Wake up app again
-        uses: satak/webrequest-action@master
-        with:
-          url: 'https://aenbot-api.azurewebsites.net/aengbot/wakeUp'
-          method: GET
-          headers: '{"XAPIKEY": "${{ secrets.AENGBOT_API_KEY }}"}'
-          
-      - name: Sleep for 10 seconds
-        run: sleep 10s
-        shell: bash
+          timeout_seconds: 10
+          max_attempts: 5
+          command: |
+            curl -H "XAPIKEY: ${{ secrets.AENGBOT_API_KEY }}" https://aenbot-api.azurewebsites.net/aengbot/wakeup 
 
       - name: Trigger scan
         uses: satak/webrequest-action@master
