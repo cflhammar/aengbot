@@ -50,7 +50,7 @@ public class AddSubscriptionHandler(ISubscriptionRepository repository, ICourseR
         if (command.ToTime == default)
             errors.Add("ToTime is required");
 
-        if (command.NumberOfPlayers <= 0 || command.NumberOfPlayers < 5)
+        if (command.NumberOfPlayers is <= 0 or > 5)
             errors.Add("NumberOfPlayers must be greater than 0 and less than 5");
 
         if (string.IsNullOrWhiteSpace(command.Email))
