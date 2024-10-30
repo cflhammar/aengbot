@@ -16,8 +16,8 @@ jobs:
           method: GET
           headers: '{"XAPIKEY": "${{ secrets.AENGBOT_API_KEY }}"}'
           
-      - name: Sleep for 10 seconds
-        run: sleep 10s
+      - name: Sleep for 15 seconds
+        run: sleep 15s
         shell: bash
         
       - name: Wake up app again
