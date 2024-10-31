@@ -12,8 +12,8 @@ jobs:
       - name: Wake up app
         uses: nick-fields/retry@v3
         with:
-          timeout_seconds: 10
-          max_attempts: 5
+          timeout_seconds: 15
+          max_attempts: 10
           command: |
             curl -H "XAPIKEY: ${{ secrets.AENGBOT_API_KEY }}" https://aenbot-api.azurewebsites.net/aengbot/wakeup 
 
