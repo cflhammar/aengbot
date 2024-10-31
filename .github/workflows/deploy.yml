@@ -20,8 +20,6 @@ jobs:
         filters: |
           codeChange:
             - '!.github/workflows/trigger.yaml'
-#          trigger:  
-#            - '.github/workflows/trigger.yaml'
     - name: exit if code is not changed
       if: ${{ steps.filter.outputs.codeChange == 'false' }}
       run: |
