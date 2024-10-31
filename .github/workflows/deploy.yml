@@ -10,7 +10,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  check:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          code:
+            - '!.github/workflows/trigger.yaml'
+#          trigger:  
+#            - '.github/workflows/trigger.yaml'
+  
   build:
+    if: steps.filter.outputs.code == 'true'
     runs-on: ubuntu-latest
 
     steps:
