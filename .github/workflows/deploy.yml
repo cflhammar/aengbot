@@ -13,7 +13,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     outputs:
-      run_next: ${{ steps.filter.outputs.set-output }}
+      run_next: ${{ steps.set_output.outputs.run_next }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -22,8 +22,8 @@ jobs:
           filters: |
             codeChange:
               - '!.github/workflows/trigger.yaml' 
-      - name: set output
-        id: set-output
+      - name: set_output
+        id: set_output
         run: |
           echo "run_next=${{ steps.filter.outputs.codeChange  }}" >> $GITHUB_OUTPUT
 
