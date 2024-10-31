@@ -13,7 +13,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     outputs:
-      codeChange: ${{ steps.filter.outputs.codeChange }}
+      run_next: ${{ steps.filter.outputs.check }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -21,16 +21,14 @@ jobs:
         with:
           filters: |
             codeChange:
-              - '!.github/workflows/trigger.yaml'
-      - name: code is not changed
-        if: ${{ steps.filter.outputs.codeChange == 'false' }}
+              - '!.github/workflows/trigger.yaml' 
+      - name: set output
         run: |
-          echo "CHECK=false" >> "$GITHUB_OUTPUT"
+          echo "run_next=${{ steps.filter.outputs.codeChange  }}" >> "$GITHUB_OUTPUT"
 
   build:
     needs: check
-    if:
-      ${{ needs.check.outputs.CHECK }}
+    if: contains(needs.check.outputs.run_next, 'true')
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ needs.check.outputs.codeChange }}
