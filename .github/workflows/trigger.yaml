@@ -1,8 +1,8 @@
 name: Run aengbot
 
 on:
-  schedule: # utc time on github runner
-    - cron: '*/7 6-22 * * *'
+#  schedule: 
+#    - cron: '*/7 6-22 * * *' # utc time on github runner
   workflow_dispatch:
 
 jobs:
