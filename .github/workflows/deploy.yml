@@ -21,17 +21,11 @@ jobs:
         with:
           filters: |
             codeChange:
-              - '!.github/workflows/trigger.yaml' 
+              - '!.github/workflows/trigger.yaml'
       - name: set_output
         id: set_output
         run: |
           echo "run_next=${{ steps.filter.outputs.codeChange  }}" >> $GITHUB_OUTPUT
-
-  test:
-    needs: check
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ needs.check.outputs.run_next }}
 
   build:
     needs: check
