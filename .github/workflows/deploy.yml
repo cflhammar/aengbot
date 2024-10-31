@@ -22,18 +22,18 @@ jobs:
           filters: |
             codeChange:
               - '!.github/workflows/trigger.yaml'
-#      - name: exit if code is not changed
-#        if: ${{ steps.filter.outputs.codeChange == 'false' }}
-#        run: |
-#          echo "No code changes detected, exiting... No need to build and deploy."
-#          exit 1
-  
+      - name: code is not changed
+        if: ${{ steps.filter.outputs.codeChange == 'false' }}
+        run: |
+          echo "CHECK=false" >> "$GITHUB_OUTPUT"
+
   build:
     needs: check
     if:
-      ${{ needs.check.outputs.codeChange }}
+      ${{ needs.check.outputs.CHECK }}
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ needs.check.outputs.codeChange }}
       - uses: actions/checkout@v4
 
       - name: Set up .NET Core
