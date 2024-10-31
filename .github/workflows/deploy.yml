@@ -18,13 +18,17 @@ jobs:
       id: filter
       with:
         filters: |
-          code:
+          codeChange:
             - '!.github/workflows/trigger.yaml'
 #          trigger:  
 #            - '.github/workflows/trigger.yaml'
+    - name: exit if code is not changed
+      if: ${{ steps.filter.outputs.codeChange == 'true' }}
+      run: |
+        echo "No code changes detected, exiting... No need to build and deploy."
+        exit 0
   
   build:
-    if: steps.filter.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,7 +56,6 @@ jobs:
     environment:
       name: 'production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
