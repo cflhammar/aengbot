@@ -16,10 +16,11 @@ jobs:
           max_attempts: 10
           command: |
             curl -H "XAPIKEY: ${{ secrets.AENGBOT_API_KEY }}" https://aenbot-api.azurewebsites.net/aengbot/wakeup 
-
+            
       - name: Trigger scan
-        uses: satak/webrequest-action@master
+        uses: nick-fields/retry@v3
         with:
-          url: 'https://aenbot-api.azurewebsites.net/aengbot/trigger'
-          method: GET
-          headers: '{"XAPIKEY": "${{ secrets.AENGBOT_API_KEY }}"}'
+          timeout_seconds: 10
+          max_attempts: 3
+          command: |
+            curl -H "XAPIKEY: ${{ secrets.AENGBOT_API_KEY }}" https://aenbot-api.azurewebsites.net/aengbot/trigger 
