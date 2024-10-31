@@ -23,10 +23,10 @@ jobs:
 #          trigger:  
 #            - '.github/workflows/trigger.yaml'
     - name: exit if code is not changed
-      if: ${{ steps.filter.outputs.codeChange == 'true' }}
+      if: ${{ steps.filter.outputs.codeChange == 'false' }}
       run: |
         echo "No code changes detected, exiting... No need to build and deploy."
-        exit 0
+        exit 1
   
   build:
     needs: check
