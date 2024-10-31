@@ -1,7 +1,7 @@
 name: Run aengbot
 
 on:
-  schedule: 
+  schedule:
     - cron: '*/7 6-22 * * *' # utc time zone on github runner
   workflow_dispatch:
 
@@ -16,7 +16,7 @@ jobs:
           max_attempts: 10
           command: |
             curl -H "XAPIKEY: ${{ secrets.AENGBOT_API_KEY }}" https://aenbot-api.azurewebsites.net/aengbot/wakeup 
-            
+
       - name: Trigger scan
         uses: nick-fields/retry@v3
         with:
