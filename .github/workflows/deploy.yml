@@ -24,7 +24,7 @@ jobs:
               - '!.github/workflows/trigger.yaml' 
       - name: set output
         run: |
-          echo "run_next=${{ steps.filter.outputs.codeChange  }}" >> "$GITHUB_OUTPUT"
+          echo "run_next=${{ steps.filter.outputs.codeChange  }}" >> $GITHUB_OUTPUT
 
   test:
     needs: check
