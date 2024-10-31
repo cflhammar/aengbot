@@ -26,6 +26,12 @@ jobs:
         run: |
           echo "run_next=${{ steps.filter.outputs.codeChange  }}" >> "$GITHUB_OUTPUT"
 
+  test:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ needs.check.outputs.run_next }}
+
   build:
     needs: check
     if: contains(needs.check.outputs.run_next, 'true')
