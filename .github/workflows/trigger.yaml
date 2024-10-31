@@ -1,4 +1,4 @@
-name: Run aengbot
+name: Trigger Aengbot
 
 on:
   schedule:
