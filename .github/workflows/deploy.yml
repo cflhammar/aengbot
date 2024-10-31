@@ -26,7 +26,6 @@ jobs:
   build:
     if: steps.filter.outputs.code == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
