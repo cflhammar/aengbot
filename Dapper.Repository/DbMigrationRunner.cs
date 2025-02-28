@@ -19,6 +19,7 @@ public class DbMigrationRunner : IDbMigrationRunner
 
     public void Run()
     {
+        Thread.Sleep(10000);
         EnsureDatabase.For.SqlDatabase(_connectionString);
 
         var upgradeEngine =
