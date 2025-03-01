@@ -28,6 +28,7 @@ public class SubscriptionDriver(ApiClientDriver httpClient)
         };
         
         await httpClient.WhenARequestIsMade(httpRequest);
+        await httpClient.ThenRequestIsSuccessful();
     }
 
     private record SubscribeRequest(

@@ -6,4 +6,5 @@ public interface ICourseRepository
 {
     Task<List<Course>> GetCourses(CancellationToken ct);
     Task<string> GetCourseName(string subCourseId);
+    Task<bool> AddCourse(Course course);
 }

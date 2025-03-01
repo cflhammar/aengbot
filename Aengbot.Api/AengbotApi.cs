@@ -16,6 +16,9 @@ internal static class AengbotApi
         
         v1.MapGet("/trigger", Trigger).Produces(Status200OK).Produces(Status400BadRequest);
 
+        v1.MapPost("/courses/add", AddCourse).Produces(Status200OK, typeof(IResult))
+            .Produces(Status400BadRequest);
+        
         v1.MapGet("/courses", GetAvailableCourses).Produces(Status200OK, typeof(IResult))
             .Produces(Status400BadRequest);
 
@@ -28,6 +31,20 @@ internal static class AengbotApi
     {
         var response = await handler.Handle(ct);
         return Results.Ok("Notification sent to: " + string.Join(", ", response));
+    }
+    
+    private static async Task<IResult> AddCourse(AddCourseRequest request, CancellationToken ct, IAddCourseHandler handler)
+    {
+        var command = new AddCourseCommand(
+            request.Id,
+            request.Name
+            );
+
+        var errors = await handler.Handle(command, ct);
+        if (errors.Count != 0)
+            return Results.BadRequest(errors);
+
+        return Results.Ok("Subscription added successfully");
     }
     
     private static async Task<IResult> GetAvailableCourses(CancellationToken ct, IGetCoursesHandler handler)
@@ -58,4 +75,8 @@ internal static class AengbotApi
         DateTime ToTime,
         int NumberOfPlayers,
         string Email);
+    
+    private record AddCourseRequest(
+        string Id,
+        string Name);
 }

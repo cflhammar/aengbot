@@ -100,19 +100,28 @@ namespace Tests.Features
             {
                 await this.ScenarioStartAsync();
                 global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
+                            "Id",
+                            "Name"});
+                table1.AddRow(new string[] {
+                            "1",
+                            "Golf Course"});
+#line 4
+        await testRunner.GivenAsync("courses exist", ((string)(null)), table1, "Given ");
+#line hidden
+                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
                             "Email",
                             "CourseId",
                             "FromTime",
                             "ToTime",
                             "NumberOfPlayers"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "user@email.com",
                             "1",
                             "2025-01-01T09:00",
                             "2025-01-01T12:00",
                             "2"});
-#line 4
-        await testRunner.GivenAsync("a user subscribed to", ((string)(null)), table1, "Given ");
+#line 7
+        await testRunner.GivenAsync("a user subscribed to", ((string)(null)), table2, "Given ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

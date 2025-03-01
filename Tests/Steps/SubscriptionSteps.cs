@@ -5,7 +5,7 @@ namespace Tests.Steps;
 
 [Binding]
 public class SubscriptionSteps(SubscriptionDriver subscriptionDriver)
-{
+{  
     [Given(@"a user subscribed to")]
     public async Task GivenAUserSubscribedTo(Table table)
     {

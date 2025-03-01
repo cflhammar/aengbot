@@ -36,6 +36,20 @@ public class CourseRepository(ISqlConnectionFactory sqlConnectionFactory) : ICou
         return courseName;
     }
 
+    public async Task<bool> AddCourse(Course course)
+    {
+        using var conn = sqlConnectionFactory.Create();
+        var affectedRows = await conn.ExecuteAsync(
+            sql: $"""
+                    INSERT INTO Courses (Id, Name) VALUES (@Id, @Name)
+                  """,
+            param: new
+            {
+                course.Id, course.Name
+            });
+        return affectedRows == 1;
+    }
+
     private static Course Map(CourseDataModel course)
     {
         return new Course()
