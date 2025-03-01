@@ -4,7 +4,7 @@ using Tests.Steps;
 
 namespace Tests.Drivers;
 
-public class SubscriptionDriver(HttpClientDriver httpClient)
+public class SubscriptionDriver(ApiClientDriver httpClient)
 {
     public async Task AddSubscription(SubscriptionSteps.AddSubscriptionStep addSubscriptionStep)
     {

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Reqnroll;
+using Reqnroll.BoDi;
+using Tests.Drivers;
 
 namespace Tests.Hooks;
 
@@ -12,42 +14,20 @@ public class BeforeTestRunHooks
 {
     private static IContainer _container;
 
-
-    [BeforeTestRun(Order = 1)]
-    public static async Task RunTestContainer()
+    [BeforeTestRun]
+    public static void BeforeTestRun()
     {
-        _container = new ContainerBuilder()
-            .WithImage("mcr.microsoft.com/azure-sql-edge:1.0.7")
-            .WithPortBinding(5551, 1433)
-            .WithEnvironment("SA_PASSWORD", "TestPassword123")
-            .WithEnvironment("ACCEPT_EULA", "Y")
-            .Build();
-        
-        await _container.StartAsync();
+        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+        Task.WhenAll(
+            SqlServerDriver.InitializeAsync()
+        ).GetAwaiter().GetResult();
     }
-    
-    // [BeforeTestRun(Order = 2)]
-    // public static void MountTestAppsettings()
-    // {
-//     _webAppFactory = new WebApplicationFactory<Program>()
-//     .WithWebHostBuilder(builder =>
-//     {
-//         builder.ConfigureAppConfiguration((context, config) =>
-//         {
-//             config.AddJsonFile("appsettings.Test.json");
-//         });
-//     });
-// Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
-    // }
-    
 
     [AfterTestRun]
-    public static async Task DisposeAsync()
+    public static void AfterTestRun()
     {
-        if (_container != null)
-        {
-            await _container.DisposeAsync();
-        }
-        // _webAppFactory?.Dispose();
+        Task.WhenAll(
+            SqlServerDriver.DisposeAsync()
+        ).GetAwaiter().GetResult();
     }
 }
