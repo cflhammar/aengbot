@@ -24,7 +24,7 @@ public class CourseRepository(ISqlConnectionFactory sqlConnectionFactory) : ICou
     public async Task<Course?> Get(string courseId)
     {
         using var conn = sqlConnectionFactory.Create();
-        var course = await conn.QueryFirstAsync<CourseDataModel?>(
+        var course = await conn.QueryFirstOrDefaultAsync<CourseDataModel>(
             sql: $"""
                   SELECT Id, Name FROM Courses
                   WHERE Id = @Id

@@ -4,15 +4,24 @@ using Tests.Drivers;
 namespace Tests.Steps;
 
 [Binding]
-public class SubscriptionSteps(SubscriptionDriver subscriptionDriver)
+public class SubscriptionSteps(SubscriptionDriver subscriptionDriver, ApiClientDriver apiClientDriver)
 {
+    [Given(@"a user wants to subscribe to")]
+    public void GivenAUserWantsToSubscribeTo(Table table)
+    {
+        var subscription = table.CreateInstance<SubscriptionStep>();
+        subscriptionDriver.GivenAUserWantsToSubscribeTo(subscription);
+    }
+
     [Given(@"a user subscribed to")]
     public async Task GivenAUserSubscribedTo(Table table)
     {
         var subscriptions = table.CreateSet<SubscriptionStep>();
         foreach (var subscription in subscriptions)
         {
-            await subscriptionDriver.AddSubscription(subscription);    
+            subscriptionDriver.GivenAUserWantsToSubscribeTo(subscription);
+            await apiClientDriver.WhenARequestIsMade();
+            await apiClientDriver.ThenRequestIsSuccessful();
         }
     }
 

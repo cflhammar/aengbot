@@ -11,4 +11,13 @@ public class ApiClientSteps(ApiClientDriver driver)
     {
         await driver.WhenARequestIsMade();   
     }
+
+    [Then(@"the request is not successful with")]
+    public void ThenTheRequestIsNotSuccessful(Table table)
+    {
+        var status = table.CreateInstance<ErrorStep>();
+        driver.ThenTheRequestIsNotSuccessfulWith(status);
+    }
+    
+    public record ErrorStep(int status, string message);
 }

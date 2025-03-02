@@ -162,6 +162,54 @@ namespace Tests.Features
             }
             await this.ScenarioCleanupAsync();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("User subscribes to an invalid course")]
+        public async System.Threading.Tasks.Task UserSubscribesToAnInvalidCourse()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("User subscribes to an invalid course", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 19
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
+                            "Email",
+                            "CourseId",
+                            "FromTime",
+                            "ToTime",
+                            "NumberOfPlayers"});
+                table4.AddRow(new string[] {
+                            "user@email.com",
+                            "1",
+                            "2025-01-01T09:00",
+                            "2025-01-01T12:00",
+                            "2"});
+#line 20
+        await testRunner.GivenAsync("a user wants to subscribe to", ((string)(null)), table4, "Given ");
+#line hidden
+#line 23
+        await testRunner.WhenAsync("the request is made", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
+                            "status",
+                            "message"});
+                table5.AddRow(new string[] {
+                            "400",
+                            "Course does not exist"});
+#line 24
+        await testRunner.ThenAsync("the request is not successful with", ((string)(null)), table5, "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
     }
 }
 #pragma warning restore

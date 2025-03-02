@@ -7,7 +7,7 @@ namespace Tests.Drivers;
 
 public class SubscriptionDriver(ApiClientDriver httpClient)
 {
-    public async Task AddSubscription(SubscriptionSteps.SubscriptionStep subscriptionStep)
+    public void GivenAUserWantsToSubscribeTo(SubscriptionSteps.SubscriptionStep subscriptionStep)
     {
         var request = new SubscribeRequest(
             subscriptionStep.Email,
@@ -16,7 +16,6 @@ public class SubscriptionDriver(ApiClientDriver httpClient)
             subscriptionStep.ToTime,
             subscriptionStep.NumberOfPlayers
         );
-
         var requestJson = JsonSerializer.Serialize(request,
             new JsonSerializerOptions
             {
@@ -27,10 +26,7 @@ public class SubscriptionDriver(ApiClientDriver httpClient)
         {
             Content = new StringContent(requestJson, Encoding.UTF8, "application/json")
         };
-
         httpClient.RequestMessage = httpRequest;
-        await httpClient.WhenARequestIsMade();
-        await httpClient.ThenRequestIsSuccessful();
     }
 
     public void GivenAUserWithEmailWantsToGetSubscriptions(string email)
@@ -60,4 +56,5 @@ public class SubscriptionDriver(ApiClientDriver httpClient)
         DateTime FromTime,
         DateTime ToTime,
         int NumberOfPlayers);
+    
 }
