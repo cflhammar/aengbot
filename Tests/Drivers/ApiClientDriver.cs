@@ -51,7 +51,7 @@ public class ApiClientDriver(WebApplicationFactory<Program> clientFactory)
         {
             var contentObject = JsonConvert.DeserializeObject<T>(responseContent);
             contentObject.Should().NotBeNull();
-            return contentObject;
+            return contentObject!;
         }
         catch (JsonSerializationException jsonEx)
         {

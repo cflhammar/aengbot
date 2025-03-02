@@ -22,6 +22,6 @@ public class GetCoursesHandler(ICourseRepository repository) : IGetCoursesHandle
     public async Task<string> GetCourseName(string subCourseId)
     {
         var course = await repository.Get(subCourseId);
-        return course.Name;
+        return course?.Name ?? "Course not found";
     }
 }

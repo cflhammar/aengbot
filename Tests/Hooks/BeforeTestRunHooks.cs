@@ -12,7 +12,7 @@ namespace Tests.Hooks;
 [Binding]
 public class BeforeTestRunHooks
 {
-    private static IContainer _container;
+    // private static IContainer _container;
 
     [BeforeTestRun]
     public static void BeforeTestRun()

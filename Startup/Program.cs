@@ -10,8 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var services = builder.Services;
 
-using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
-ILogger logger = factory.CreateLogger("Program");
+using ILoggerFactory factory = LoggerFactory.Create(b => b.AddConsole());
+// ILogger logger = factory.CreateLogger("Program");
 
 
 //

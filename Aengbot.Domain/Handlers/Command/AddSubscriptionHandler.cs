@@ -32,7 +32,7 @@ public class AddSubscriptionHandler(ISubscriptionRepository repository, ICourseR
             Email = command.Email
         };
         
-        repository.AddSubscription(subscription, ct);
+        await repository.AddSubscription(subscription, ct);
 
         return [];
     }
