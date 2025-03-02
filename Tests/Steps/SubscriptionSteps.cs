@@ -13,7 +13,7 @@ public class SubscriptionSteps(SubscriptionDriver subscriptionDriver, ApiClientD
         subscriptionDriver.GivenAUserWantsToSubscribeTo(subscription);
     }
 
-    [Given(@"a user subscribed to")]
+    [Given(@"users subscribed to")]
     public async Task GivenAUserSubscribedTo(Table table)
     {
         var subscriptions = table.CreateSet<SubscriptionStep>();

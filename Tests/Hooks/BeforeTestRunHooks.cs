@@ -17,7 +17,9 @@ public class BeforeTestRunHooks
     [BeforeTestRun]
     public static void BeforeTestRun()
     {
-        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+        //Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+        Environment.SetEnvironmentVariable("XAPIKEY", "1234");
+
         Task.WhenAll(
             SqlServerDriver.InitializeAsync()
         ).GetAwaiter().GetResult();

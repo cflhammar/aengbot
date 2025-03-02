@@ -129,13 +129,19 @@ namespace Tests.Features
                             "2025-02-01T09:00",
                             "2025-02-01T12:00",
                             "3"});
+                table2.AddRow(new string[] {
+                            "otherUser@email.com",
+                            "2",
+                            "2025-02-01T09:00",
+                            "2025-02-01T12:00",
+                            "3"});
 #line 8
-        await testRunner.GivenAsync("a user subscribed to", ((string)(null)), table2, "Given ");
-#line hidden
-#line 12
-        await testRunner.AndAsync("a user with email user@email.com wants to get subscriptions", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.GivenAsync("users subscribed to", ((string)(null)), table2, "Given ");
 #line hidden
 #line 13
+        await testRunner.AndAsync("a user with email user@email.com wants to get subscriptions", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 14
         await testRunner.WhenAsync("the request is made", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
                 global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
@@ -156,7 +162,7 @@ namespace Tests.Features
                             "2025-02-01T09:00",
                             "2025-02-01T12:00",
                             "3"});
-#line 14
+#line 15
         await testRunner.ThenAsync("the subscription are returned", ((string)(null)), table3, "Then ");
 #line hidden
             }
@@ -170,7 +176,7 @@ namespace Tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("User subscribes to an invalid course", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 19
+#line 20
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -188,14 +194,14 @@ namespace Tests.Features
                             "NumberOfPlayers"});
                 table4.AddRow(new string[] {
                             "user@email.com",
-                            "1",
+                            "3",
                             "2025-01-01T09:00",
                             "2025-01-01T12:00",
                             "2"});
-#line 20
+#line 21
         await testRunner.GivenAsync("a user wants to subscribe to", ((string)(null)), table4, "Given ");
 #line hidden
-#line 23
+#line 24
         await testRunner.WhenAsync("the request is made", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
                 global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
@@ -204,7 +210,7 @@ namespace Tests.Features
                 table5.AddRow(new string[] {
                             "400",
                             "Course does not exist"});
-#line 24
+#line 25
         await testRunner.ThenAsync("the request is not successful with", ((string)(null)), table5, "Then ");
 #line hidden
             }
