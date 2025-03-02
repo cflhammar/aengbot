@@ -24,7 +24,8 @@ public class CourseDriver(ApiClientDriver httpClient)
             Content = new StringContent(requestJson, Encoding.UTF8, "application/json")
         };
         
-        await httpClient.WhenARequestIsMade(httpRequest);
+        httpClient.RequestMessage = httpRequest;
+        await httpClient.WhenARequestIsMade();
         await httpClient.ThenRequestIsSuccessful();
     }
 

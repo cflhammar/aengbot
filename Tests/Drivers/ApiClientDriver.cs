@@ -9,14 +9,16 @@ namespace Tests.Drivers;
 public class ApiClientDriver(WebApplicationFactory<Program> clientFactory)
 {
     private HttpResponseMessage? _apiResponse;
+    public HttpRequestMessage? RequestMessage;
 
-
-    public async Task WhenARequestIsMade(HttpRequestMessage request)
+    public async Task WhenARequestIsMade()
     {
-        request.Headers.Add("Accept", "application/json");
+        var request = RequestMessage;
+        request!.Headers.Add("Accept", "application/json");
         request.Headers.Add("XAPIKEY", "1234");
         var httpClient = clientFactory.CreateClient();
         _apiResponse = await httpClient.SendAsync(request);
+        RequestMessage = null;
     }
 
     public async Task ThenRequestIsSuccessful()

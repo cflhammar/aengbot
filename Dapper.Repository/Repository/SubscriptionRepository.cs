@@ -34,7 +34,7 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
         }
     }
 
-    public async Task<List<Subscription>> GetSubscriptions(CancellationToken ct)
+    public async Task<List<Subscription>> GetAll(CancellationToken ct)
     {
         try
         {
@@ -59,6 +59,33 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    public async Task<List<Subscription>?> Get(string email, CancellationToken ct)
+    {
+        try
+        {
+            using var conn = sqlConnectionFactory.Create();
+            var subs = await conn.QueryAsync<SubscriptionDataModel?>(
+                sql:
+                $"""
+                    SELECT CourseId, FromTime, ToTime, NumberPlayers, Email
+                    FROM Subscriptions
+                    WHERE Email = @Email
+                 """,
+                param: new
+                {
+                    Email = email
+                }
+            );
+            return subs.Select(Map!).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 
     private Subscription Map(SubscriptionDataModel dataModel)

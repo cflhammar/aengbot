@@ -21,19 +21,19 @@ public class CourseRepository(ISqlConnectionFactory sqlConnectionFactory) : ICou
         return courses.Select(Map!).ToList();
     }
 
-    public async Task<string> GetCourseName(string courseId)
+    public async Task<Course?> Get(string courseId)
     {
         using var conn = sqlConnectionFactory.Create();
-        var courseName = await conn.QueryFirstAsync<string>(
+        var course = await conn.QueryFirstAsync<CourseDataModel?>(
             sql: $"""
-                  SELECT Name FROM Courses
+                  SELECT Id, Name FROM Courses
                   WHERE Id = @Id
                   """,
             param: new
             {
-                Id = courseId
+                Id = courseId 
             });
-        return courseName;
+        return course != null ? Map(course) : null;
     }
 
     public async Task<bool> AddCourse(Course course)

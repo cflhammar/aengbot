@@ -13,14 +13,14 @@ public record AddSubscriptionCommand(
 
 public interface IAddSubscriptionHandler : ICommandHandler
 {
-    List<string> Handle(AddSubscriptionCommand command, CancellationToken ct);
+    Task<List<string>> Handle(AddSubscriptionCommand command, CancellationToken ct);
 }
 
 public class AddSubscriptionHandler(ISubscriptionRepository repository, ICourseRepository courseRepository) : IAddSubscriptionHandler
 {
-    public List<string> Handle(AddSubscriptionCommand command, CancellationToken ct)
+    public async Task<List<string>> Handle(AddSubscriptionCommand command, CancellationToken ct)
     {
-        var errors = Validate(command, ct);
+        var errors = await Validate(command, ct);
         if (errors.Count != 0) return errors;
         
         var subscription = new Subscription()
@@ -37,7 +37,7 @@ public class AddSubscriptionHandler(ISubscriptionRepository repository, ICourseR
         return [];
     }
 
-    private List<string> Validate(AddSubscriptionCommand command, CancellationToken ct)
+    private async Task<List<string>> Validate(AddSubscriptionCommand command, CancellationToken ct)
     {
         var errors = new List<string>();
 
@@ -60,8 +60,8 @@ public class AddSubscriptionHandler(ISubscriptionRepository repository, ICourseR
         if (!emailRegex.IsMatch(command.Email))
             errors.Add("Email is not in valid format");
         
-        var courses = courseRepository.GetCourses(ct).Result;
-        if (courses.All(x => x.Id != command.CourseId))
+        var course = await courseRepository.Get(command.CourseId);
+        if (course == null)
             errors.Add("Course does not exist");
 
         return errors;

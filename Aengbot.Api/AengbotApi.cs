@@ -1,7 +1,7 @@
 global using static Microsoft.AspNetCore.Http.StatusCodes;
 using Aengbot.Handlers.Command;
 using Aengbot.Handlers.Query;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AengbotApi;
 
@@ -16,13 +16,20 @@ internal static class AengbotApi
         
         v1.MapGet("/trigger", Trigger).Produces(Status200OK).Produces(Status400BadRequest);
 
+        // courses
         v1.MapPost("/courses/add", AddCourse).Produces(Status200OK, typeof(IResult))
             .Produces(Status400BadRequest);
         
-        v1.MapGet("/courses", GetAvailableCourses).Produces(Status200OK, typeof(IResult))
+        v1.MapGet("/courses", GetCourses).Produces(Status200OK, typeof(IResult))
             .Produces(Status400BadRequest);
 
-        v1.MapPost("/subscribe", AddSubscription).Produces(Status200OK).Produces(Status400BadRequest);
+        // subs
+        v1.MapPost("subscriptions/add", AddSubscription).Produces(Status200OK).Produces(Status400BadRequest);
+        
+        // get subs with email as query param
+        v1.MapGet("subscriptions/{email}", GetSubscriptions).Produces(Status200OK).Produces(Status400BadRequest);
+        
+        
 
         return app;
     }
@@ -47,13 +54,19 @@ internal static class AengbotApi
         return Results.Ok("Subscription added successfully");
     }
     
-    private static async Task<IResult> GetAvailableCourses(CancellationToken ct, IGetCoursesHandler handler)
+    private static async Task<IResult> GetCourses(CancellationToken ct, IGetCoursesHandler handler)
     {
         var response = await handler.Handle(ct);
         return Results.Ok(response);
     }
 
-    private static IResult AddSubscription(AddSubscriptionRequest request, CancellationToken ct, IAddSubscriptionHandler handler)
+    private static async Task<IResult> GetSubscriptions([FromRoute] string email, CancellationToken ct, IGetSubscriptionsHandler handler)
+    {
+        var response = await handler.Handle(email, ct);
+        return Results.Ok(response);
+    }
+    
+    private static async Task<IResult> AddSubscription(AddSubscriptionRequest request, CancellationToken ct, IAddSubscriptionHandler handler)
     {
         var command = new AddSubscriptionCommand(
             request.CourseId, 
@@ -62,7 +75,7 @@ internal static class AengbotApi
             request.NumberOfPlayers, 
             request.Email);
 
-        var errors = handler.Handle(command, ct);
+        var errors = await handler.Handle(command, ct);
         if (errors.Count != 0)
             return Results.BadRequest(errors);
 

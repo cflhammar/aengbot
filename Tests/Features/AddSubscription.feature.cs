@@ -104,7 +104,10 @@ namespace Tests.Features
                             "Name"});
                 table1.AddRow(new string[] {
                             "1",
-                            "Golf Course"});
+                            "Golf Course 1"});
+                table1.AddRow(new string[] {
+                            "2",
+                            "Golf Course 2"});
 #line 4
         await testRunner.GivenAsync("courses exist", ((string)(null)), table1, "Given ");
 #line hidden
@@ -120,8 +123,41 @@ namespace Tests.Features
                             "2025-01-01T09:00",
                             "2025-01-01T12:00",
                             "2"});
-#line 7
+                table2.AddRow(new string[] {
+                            "user@email.com",
+                            "2",
+                            "2025-02-01T09:00",
+                            "2025-02-01T12:00",
+                            "3"});
+#line 8
         await testRunner.GivenAsync("a user subscribed to", ((string)(null)), table2, "Given ");
+#line hidden
+#line 12
+        await testRunner.AndAsync("a user with email user@email.com wants to get subscriptions", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 13
+        await testRunner.WhenAsync("the request is made", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                            "Email",
+                            "CourseId",
+                            "FromTime",
+                            "ToTime",
+                            "NumberOfPlayers"});
+                table3.AddRow(new string[] {
+                            "user@email.com",
+                            "1",
+                            "2025-01-01T09:00",
+                            "2025-01-01T12:00",
+                            "2"});
+                table3.AddRow(new string[] {
+                            "user@email.com",
+                            "2",
+                            "2025-02-01T09:00",
+                            "2025-02-01T12:00",
+                            "3"});
+#line 14
+        await testRunner.ThenAsync("the subscription are returned", ((string)(null)), table3, "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
