@@ -34,7 +34,7 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
         }
     }
 
-    public async Task<List<Subscription>> GetAll(CancellationToken ct)
+    public async Task<List<Subscription>> GetAll(DateTime activeAt, CancellationToken ct)
     {
         try
         {
@@ -48,7 +48,7 @@ public class SubscriptionRepository(ISqlConnectionFactory sqlConnectionFactory) 
                  """,
                 param: new
                 {
-                     Now = DateTime.Now
+                     Now = activeAt
                 }
             );
             

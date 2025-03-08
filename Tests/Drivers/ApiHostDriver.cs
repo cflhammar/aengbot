@@ -13,7 +13,7 @@ public class ApiHostDriver
     private readonly IObjectContainer _objectContainer;
     private readonly WebApplicationFactory<Program> _factory;
 
-    public ApiHostDriver(IObjectContainer objectContainer)
+    public ApiHostDriver(IObjectContainer objectContainer, SweeetSpotApiDriver sweetSpotApiDriver, DateTimeDriver dateTimeDriver)
     {
         _objectContainer = objectContainer;
 
@@ -24,6 +24,22 @@ public class ApiHostDriver
                 //
             });
             
+            // do this here instead?
+            // builder.UseEnvironment("AcceptanceTest");
+            // builder.UseSetting("AzureAd:ClientId", "TestID");
+            
+            builder.ConfigureTestServices(services =>
+            {
+                dateTimeDriver.AddMockDateTimeProvider(services);
+                sweetSpotApiDriver.AddMockSweetspotApi(services);
+            });
+            
         });
+    }
+    
+    [BeforeScenario]
+    public void BeforeScenario()
+    {
+        _objectContainer.RegisterInstanceAs(_factory);
     }
 }

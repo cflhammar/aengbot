@@ -19,18 +19,7 @@ public class SweetSpotApi(HttpClient client) : ISweetSpotApi
         var response = await client.GetAsync(url);
         var json = response.Content.ReadAsStringAsync().Result;
         List<Booking>? bookings = JsonSerializer.Deserialize<List<Booking>>(json);
-        
 
-        var playableBookings = bookings
-            ?.Where(b => IsPlayableNotFullAndWithinTimeInterval(b, fromTime, toTime, numberOfPlayers)).ToList();
-        return playableBookings;
-    }
-
-    private bool IsPlayableNotFullAndWithinTimeInterval(Booking booking, DateTime fromTime, DateTime toTime,
-        int numberOfPlayers)
-    {
-        return booking.category.name != "Stängd" && booking.category.custom_name != "Tävling" &&
-               booking.from.AddSeconds(1) >= fromTime && booking.from.AddSeconds(-1) <= toTime &&
-               booking.available_slots >= numberOfPlayers;
+        return bookings;
     }
 }

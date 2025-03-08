@@ -1,5 +1,6 @@
 using Aengbot.Handlers.Command;
 using Aengbot.Handlers.Query;
+using Aengbot.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +22,11 @@ public static class ServiceExtensions
         services.Scan(scan => scan
             .FromAssemblies(assembly)
             .AddClasses(classes => classes.AssignableTo<IQueryHandler>())
+            .AsMatchingInterface());
+        
+        services.Scan(scan => scan
+            .FromAssemblies(assembly)
+            .AddClasses(classes => classes.InNamespaceOf<DateService>(), publicOnly: false)
             .AsMatchingInterface());
     }
 }

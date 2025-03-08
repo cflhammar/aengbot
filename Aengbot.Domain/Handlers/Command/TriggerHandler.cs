@@ -12,7 +12,12 @@ public interface ITriggerHandler : ICommandHandler
     Task<List<string>> Handle(CancellationToken ct);
 }
 
-public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubscriptionsHandler, IGetCoursesHandler getCoursesHandler, INotifier notifier, INotificationRepository notificationRepository)
+public class TriggerHandler(
+    ISweetSpotApi api,
+    IGetSubscriptionsHandler getSubscriptionsHandler,
+    IGetCoursesHandler getCoursesHandler,
+    INotifier notifier,
+    INotificationRepository notificationRepository)
     : ITriggerHandler
 {
     public async Task<List<string>> Handle(CancellationToken ct)
@@ -27,26 +32,34 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
             foreach (var email in emails)
             {
                 var availableBookingsToNotify = new List<AengbotBooking>();
-                
+
                 // find available/not-notified bookings for each email/user and its subscriptions
                 // fix logic, remove notified from subs?
                 foreach (var sub in activeSubs.Subscriptions.Where(s => s.Email == email))
                 {
-                    var externalBookings = await api.GetBookings(sub.CourseId, sub.FromTime, sub.ToTime, sub.NumberOfPlayers);
-                    var availableBookings = externalBookings?.Select(Map).ToList();
+                    var externalBookings =
+                        await api.GetBookings(sub.CourseId, sub.FromTime, sub.ToTime, sub.NumberOfPlayers);
+                    var availableBookings = externalBookings?
+                        .Where(eb =>
+                            IsPlayableNotFullAndWithinTimeInterval(eb, sub.FromTime, sub.ToTime, sub.NumberOfPlayers))
+                        .Select(Map)
+                        .ToList();
+
                     foreach (var aengbotBooking in availableBookings!)
                     {
-                        if (!await notificationRepository.WasNotified(aengbotBooking.CourseId, aengbotBooking.Date, sub.Email))
+                        if (!await notificationRepository.WasNotified(aengbotBooking.CourseId, aengbotBooking.Date,
+                                sub.Email))
                         {
                             aengbotBooking.CourseName = await getCoursesHandler.GetCourseName(aengbotBooking.CourseId);
                             availableBookingsToNotify.Add(aengbotBooking);
                         }
                     }
                 }
+
                 if (availableBookingsToNotify.Any())
                 {
                     var notificationBookings = availableBookingsToNotify.Select(Map).ToList();
-                    
+
                     notifier.Notify(notificationBookings, email);
                     sent.Add(email);
                     foreach (var booking in notificationBookings)
@@ -59,8 +72,15 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
 
         return sent;
     }
-    
-    
+
+    private bool IsPlayableNotFullAndWithinTimeInterval(Booking booking, DateTime fromTime, DateTime toTime,
+        int numberOfPlayers)
+    {
+        return booking.category.name != "Stängd" && booking.category.custom_name != "Tävling" &&
+               booking.from.AddSeconds(1) >= fromTime && booking.from.AddSeconds(-1) <= toTime &&
+               booking.available_slots >= numberOfPlayers;
+    }
+
     private AengbotBooking Map(Booking booking)
     {
         return new AengbotBooking()
@@ -70,7 +90,7 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
             AvailableSlots = booking.available_slots
         };
     }
-    
+
     private NotificationBooking Map(AengbotBooking booking)
     {
         return new NotificationBooking
@@ -82,4 +102,3 @@ public class TriggerHandler(ISweetSpotApi api, IGetSubscriptionsHandler getSubsc
         };
     }
 }
-
