@@ -107,7 +107,7 @@ namespace Tests.Features
                             "Name"});
                 table6.AddRow(new string[] {
                             "1",
-                            "Golf Course 1"});
+                            "GolfCourse1"});
 #line 5
         await testRunner.GivenAsync("courses exist", ((string)(null)), table6, "Given ");
 #line hidden
@@ -135,16 +135,62 @@ namespace Tests.Features
                             "Event"});
                 table8.AddRow(new string[] {
                             "1",
-                            "2025-02-01T09:00",
-                            "2025-02-01T09:10",
+                            "2025-02-01T10:00",
+                            "2025-02-01T10:10",
                             "2",
+                            "",
+                            ""});
+                table8.AddRow(new string[] {
+                            "1",
+                            "2025-02-01T10:10",
+                            "2025-02-01T10:20",
+                            "0",
+                            "",
+                            ""});
+                table8.AddRow(new string[] {
+                            "1",
+                            "2025-02-01T10:20",
+                            "2025-02-01T10:30",
+                            "4",
+                            "Stängd",
+                            ""});
+                table8.AddRow(new string[] {
+                            "1",
+                            "2025-02-01T10:30",
+                            "2025-02-01T10:40",
+                            "4",
+                            "",
+                            "Tävling"});
+                table8.AddRow(new string[] {
+                            "1",
+                            "2025-02-01T10:40",
+                            "2025-02-01T10:50",
+                            "4",
                             "",
                             ""});
 #line 11
         await testRunner.AndAsync("sweetspot has bookings", ((string)(null)), table8, "And ");
 #line hidden
-#line 14
+#line 18
         await testRunner.WhenAsync("the service is triggered to search", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+                global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
+                            "Email",
+                            "CourseName",
+                            "TeeTime",
+                            "AvailableSlots"});
+                table9.AddRow(new string[] {
+                            "user@email.com",
+                            "GolfCourse1",
+                            "2025-02-01T10:00",
+                            "2"});
+                table9.AddRow(new string[] {
+                            "user@email.com",
+                            "GolfCourse2",
+                            "2025-02-01T10:40",
+                            "4"});
+#line 19
+        await testRunner.ThenAsync("notifications are sent to", ((string)(null)), table9, "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

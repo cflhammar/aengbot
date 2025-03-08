@@ -13,7 +13,7 @@ public class ApiHostDriver
     private readonly IObjectContainer _objectContainer;
     private readonly WebApplicationFactory<Program> _factory;
 
-    public ApiHostDriver(IObjectContainer objectContainer, SweeetSpotApiDriver sweetSpotApiDriver, DateTimeDriver dateTimeDriver)
+    public ApiHostDriver(IObjectContainer objectContainer, SweeetSpotApiDriver sweetSpotApiDriver, DateTimeDriver dateTimeDriver, NotificationsDriver notificationsDriver)
     {
         _objectContainer = objectContainer;
 
@@ -32,6 +32,8 @@ public class ApiHostDriver
             {
                 dateTimeDriver.AddMockDateTimeProvider(services);
                 sweetSpotApiDriver.AddMockSweetspotApi(services);
+                notificationsDriver.AddMockEmailService(services);
+                
             });
             
         });
